@@ -1,92 +1,364 @@
-# Kyverno Reporter
+# policy-reporter
 
-Sends information about Kyverno Policy Reports to various targets, like Grafana, Loki, or Elasticsearch.
+![Version: 2.6.2-bb.0](https://img.shields.io/badge/Version-2.6.2--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.1](https://img.shields.io/badge/AppVersion-2.3.1-informational?style=flat-square)
 
-## Getting started
+Policy Reporter watches for PolicyReport Resources.
+It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+## Upstream References
+* <https://kyverno.github.io/policy-reporter>
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+* <https://github.com/kyverno/policy-reporter>
 
-## Add your files
+## Learn More
+* [Application Overview](docs/overview.md)
+* [Other Documentation](docs/)
 
-- [ ] [Create](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#create-a-file) or [upload](https://docs.gitlab.com/ee/user/project/repository/web_editor.html#upload-a-file) files
-- [ ] [Add files using the command line](https://docs.gitlab.com/ee/gitlab-basics/add-file.html#add-a-file-using-the-command-line) or push an existing Git repository with the following command:
+## Pre-Requisites
 
+* Kubernetes Cluster deployed
+* Kubernetes config installed in `~/.kube/config`
+* Helm installed
+
+Install Helm
+
+https://helm.sh/docs/intro/install/
+
+## Deployment
+
+* Clone down the repository
+* cd into directory
+```bash
+helm install policy-reporter chart/
 ```
-cd existing_repo
-git remote add origin https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/kyverno-reporter.git
-git branch -M main
-git push -uf origin main
-```
 
-## Integrate with your tools
+## Values
 
-- [ ] [Set up project integrations](https://repo1.dso.mil/platform-one/big-bang/apps/sandbox/kyverno-reporter/-/settings/integrations)
-
-## Collaborate with your team
-
-- [ ] [Invite team members and collaborators](https://docs.gitlab.com/ee/user/project/members/)
-- [ ] [Create a new merge request](https://docs.gitlab.com/ee/user/project/merge_requests/creating_merge_requests.html)
-- [ ] [Automatically close issues from merge requests](https://docs.gitlab.com/ee/user/project/issues/managing_issues.html#closing-issues-automatically)
-- [ ] [Enable merge request approvals](https://docs.gitlab.com/ee/user/project/merge_requests/approvals/)
-- [ ] [Automatically merge when pipeline succeeds](https://docs.gitlab.com/ee/user/project/merge_requests/merge_when_pipeline_succeeds.html)
-
-## Test and Deploy
-
-Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing(SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
-
-***
-
-# Editing this README
-
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!).  Thank you to [makeareadme.com](https://www.makeareadme.com/) for this template.
-
-## Suggestions for a good README
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
-
-## Name
-Choose a self-explaining name for your project.
-
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
-
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
-
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
-
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
-
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
-
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
-
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| image.registry | string | `"ghcr.io"` |  |
+| image.repository | string | `"kyverno/policy-reporter"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.tag | string | `"2.3.1"` |  |
+| imagePullSecrets | list | `[]` |  |
+| replicaCount | int | `1` |  |
+| deploymentStrategy | object | `{}` |  |
+| annotations | object | `{}` |  |
+| rbac.enabled | bool | `true` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.name | string | `""` |  |
+| service.enabled | bool | `true` |  |
+| service.annotations | object | `{}` |  |
+| service.labels | object | `{}` |  |
+| service.type | string | `"ClusterIP"` |  |
+| service.port | int | `8080` |  |
+| podSecurityContext.fsGroup | int | `1234` |  |
+| securityContext.runAsUser | int | `1234` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.privileged | bool | `false` |  |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
+| resources | object | `{}` |  |
+| networkPolicy.enabled | bool | `false` |  |
+| networkPolicy.egress[0].to | string | `nil` |  |
+| networkPolicy.egress[0].ports[0].protocol | string | `"TCP"` |  |
+| networkPolicy.egress[0].ports[0].port | int | `6443` |  |
+| networkPolicy.ingress | list | `[]` |  |
+| rest.enabled | bool | `false` |  |
+| metrics.enabled | bool | `false` |  |
+| ui.enabled | bool | `false` |  |
+| kyvernoPlugin.enabled | bool | `false` |  |
+| monitoring.enabled | bool | `false` |  |
+| global.plugins.kyverno | bool | `false` |  |
+| global.backend | string | `""` |  |
+| global.port | int | `8080` |  |
+| global.fullnameOverride | string | `""` |  |
+| global.labels | object | `{}` |  |
+| policyPriorities | object | `{}` |  |
+| existingTargetConfig.enabled | bool | `false` |  |
+| existingTargetConfig.name | string | `""` |  |
+| existingTargetConfig.subPath | string | `""` |  |
+| target.loki.host | string | `""` |  |
+| target.loki.minimumPriority | string | `""` |  |
+| target.loki.sources | list | `[]` |  |
+| target.loki.skipExistingOnStartup | bool | `true` |  |
+| target.loki.customLabels | object | `{}` |  |
+| target.elasticsearch.host | string | `""` |  |
+| target.elasticsearch.index | string | `""` |  |
+| target.elasticsearch.rotation | string | `""` |  |
+| target.elasticsearch.minimumPriority | string | `""` |  |
+| target.elasticsearch.sources | list | `[]` |  |
+| target.elasticsearch.skipExistingOnStartup | bool | `true` |  |
+| target.slack.webhook | string | `""` |  |
+| target.slack.minimumPriority | string | `""` |  |
+| target.slack.sources | list | `[]` |  |
+| target.slack.skipExistingOnStartup | bool | `true` |  |
+| target.discord.webhook | string | `""` |  |
+| target.discord.minimumPriority | string | `""` |  |
+| target.discord.sources | list | `[]` |  |
+| target.discord.skipExistingOnStartup | bool | `true` |  |
+| target.teams.webhook | string | `""` |  |
+| target.teams.minimumPriority | string | `""` |  |
+| target.teams.sources | list | `[]` |  |
+| target.teams.skipExistingOnStartup | bool | `true` |  |
+| target.ui.host | string | `""` |  |
+| target.ui.minimumPriority | string | `"warning"` |  |
+| target.ui.sources | list | `[]` |  |
+| target.ui.skipExistingOnStartup | bool | `true` |  |
+| target.s3.accessKeyID | string | `""` |  |
+| target.s3.secretAccessKey | string | `""` |  |
+| target.s3.region | string | `""` |  |
+| target.s3.endpoint | string | `""` |  |
+| target.s3.bucket | string | `""` |  |
+| target.s3.prefix | string | `""` |  |
+| target.s3.minimumPriority | string | `""` |  |
+| target.s3.sources | list | `[]` |  |
+| target.s3.skipExistingOnStartup | bool | `true` |  |
+| nodeSelector | object | `{}` |  |
+| tolerations | list | `[]` |  |
+| affinity | object | `{}` |  |
+| livenessProbe.httpGet.path | string | `"/ready"` |  |
+| livenessProbe.httpGet.port | string | `"http"` |  |
+| readinessProbe.httpGet.path | string | `"/healthz"` |  |
+| readinessProbe.httpGet.port | string | `"http"` |  |
 
 ## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+# kyvernoPlugin
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.1](https://img.shields.io/badge/AppVersion-1.2.1-informational?style=flat-square)
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+Policy Reporter Kyverno Plugin
 
-## License
-For open source projects, say how it is licensed.
+## Learn More
+* [Application Overview](docs/overview.md)
+* [Other Documentation](docs/)
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+## Pre-Requisites
+
+* Kubernetes Cluster deployed
+* Kubernetes config installed in `~/.kube/config`
+* Helm installed
+
+Install Helm
+
+https://helm.sh/docs/intro/install/
+
+## Deployment
+
+* Clone down the repository
+* cd into directory
+```bash
+helm install kyvernoPlugin chart/
+```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| image.registry | string | `"ghcr.io"` |  |
+| image.repository | string | `"kyverno/policy-reporter-kyverno-plugin"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.tag | string | `"1.2.1"` |  |
+| imagePullSecrets | list | `[]` |  |
+| replicaCount | int | `1` |  |
+| deploymentStrategy | object | `{}` |  |
+| annotations | object | `{}` |  |
+| rbac.enabled | bool | `true` |  |
+| serviceAccount.create | bool | `true` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.name | string | `""` |  |
+| service.enabled | bool | `true` |  |
+| service.annotations | object | `{}` |  |
+| service.labels | object | `{}` |  |
+| service.type | string | `"ClusterIP"` |  |
+| securityContext.runAsUser | int | `1234` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.privileged | bool | `false` |  |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
+| resources | object | `{}` |  |
+| nodeSelector | object | `{}` |  |
+| tolerations | list | `[]` |  |
+| affinity | object | `{}` |  |
+| rest.enabled | bool | `true` |  |
+| metrics.enabled | bool | `true` |  |
+| networkPolicy.enabled | bool | `false` |  |
+| networkPolicy.egress[0].to | string | `nil` |  |
+| networkPolicy.egress[0].ports[0].protocol | string | `"TCP"` |  |
+| networkPolicy.egress[0].ports[0].port | int | `6443` |  |
+| networkPolicy.ingress | list | `[]` |  |
+
+## Contributing
+
+Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+# monitoring
+
+![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
+
+Policy Reporter Monitoring with predefined ServiceMonitor and Grafana Dashboards
+
+## Learn More
+* [Application Overview](docs/overview.md)
+* [Other Documentation](docs/)
+
+## Pre-Requisites
+
+* Kubernetes Cluster deployed
+* Kubernetes config installed in `~/.kube/config`
+* Helm installed
+
+Install Helm
+
+https://helm.sh/docs/intro/install/
+
+## Deployment
+
+* Clone down the repository
+* cd into directory
+```bash
+helm install monitoring chart/
+```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| plugins.kyverno | bool | `false` |  |
+| serviceMonitor.namespace | string | `nil` |  |
+| serviceMonitor.labels | object | `{}` |  |
+| serviceMonitor.relabelings | list | `[]` |  |
+| serviceMonitor.metricRelabelings | list | `[]` |  |
+| kyverno.serviceMonitor.relabelings | list | `[]` |  |
+| kyverno.serviceMonitor.metricRelabelings | list | `[]` |  |
+| grafana.namespace | string | `nil` |  |
+| grafana.dashboards.enabled | bool | `true` |  |
+| grafana.dashboards.label | string | `"grafana_dashboard"` |  |
+| grafana.folder.annotation | string | `"grafana_folder"` |  |
+| grafana.folder.name | string | `"Policy Reporter"` |  |
+| policyReportDetails.firstStatusRow.height | int | `8` |  |
+| policyReportDetails.secondStatusRow.enabled | bool | `true` |  |
+| policyReportDetails.secondStatusRow.height | int | `2` |  |
+| policyReportDetails.statusTimeline.enabled | bool | `true` |  |
+| policyReportDetails.statusTimeline.height | int | `8` |  |
+| policyReportDetails.passTable.enabled | bool | `true` |  |
+| policyReportDetails.passTable.height | int | `8` |  |
+| policyReportDetails.failTable.enabled | bool | `true` |  |
+| policyReportDetails.failTable.height | int | `8` |  |
+| policyReportDetails.warningTable.enabled | bool | `true` |  |
+| policyReportDetails.warningTable.height | int | `4` |  |
+| policyReportDetails.errorTable.enabled | bool | `true` |  |
+| policyReportDetails.errorTable.height | int | `4` |  |
+| clusterPolicyReportDetails.statusRow.height | int | `6` |  |
+| clusterPolicyReportDetails.statusTimeline.enabled | bool | `true` |  |
+| clusterPolicyReportDetails.statusTimeline.height | int | `8` |  |
+| clusterPolicyReportDetails.passTable.enabled | bool | `true` |  |
+| clusterPolicyReportDetails.passTable.height | int | `8` |  |
+| clusterPolicyReportDetails.failTable.enabled | bool | `true` |  |
+| clusterPolicyReportDetails.failTable.height | int | `8` |  |
+| clusterPolicyReportDetails.warningTable.enabled | bool | `true` |  |
+| clusterPolicyReportDetails.warningTable.height | int | `4` |  |
+| clusterPolicyReportDetails.errorTable.enabled | bool | `true` |  |
+| clusterPolicyReportDetails.errorTable.height | int | `4` |  |
+| policyReportOverview.failingSummaryRow.height | int | `8` |  |
+| policyReportOverview.failingTimeline.height | int | `10` |  |
+| policyReportOverview.failingPolicyRuleTable.height | int | `10` |  |
+| policyReportOverview.failingClusterPolicyRuleTable.height | int | `10` |  |
+
+## Contributing
+
+Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+# ui
+
+![Version: 2.3.3](https://img.shields.io/badge/Version-2.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.3](https://img.shields.io/badge/AppVersion-1.3.3-informational?style=flat-square)
+
+Policy Reporter UI
+
+## Learn More
+* [Application Overview](docs/overview.md)
+* [Other Documentation](docs/)
+
+## Pre-Requisites
+
+* Kubernetes Cluster deployed
+* Kubernetes config installed in `~/.kube/config`
+* Helm installed
+
+Install Helm
+
+https://helm.sh/docs/intro/install/
+
+## Deployment
+
+* Clone down the repository
+* cd into directory
+```bash
+helm install ui chart/
+```
+
+## Values
+
+| Key | Type | Default | Description |
+|-----|------|---------|-------------|
+| enabled | bool | `false` |  |
+| displayMode | string | `""` |  |
+| log.size | int | `200` |  |
+| plugins.kyverno | bool | `false` |  |
+| image.registry | string | `"ghcr.io"` |  |
+| image.repository | string | `"kyverno/policy-reporter-ui"` |  |
+| image.pullPolicy | string | `"IfNotPresent"` |  |
+| image.tag | string | `"1.3.3"` |  |
+| imagePullSecrets | list | `[]` |  |
+| replicaCount | int | `1` |  |
+| deploymentStrategy | object | `{}` |  |
+| securityContext.runAsUser | int | `1234` |  |
+| securityContext.runAsNonRoot | bool | `true` |  |
+| securityContext.privileged | bool | `false` |  |
+| securityContext.allowPrivilegeEscalation | bool | `false` |  |
+| securityContext.readOnlyRootFilesystem | bool | `true` |  |
+| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
+| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
+| podAnnotations | object | `{}` |  |
+| podLabels | object | `{}` |  |
+| resources | object | `{}` |  |
+| serviceAccount.create | bool | `false` |  |
+| serviceAccount.annotations | object | `{}` |  |
+| serviceAccount.name | string | `""` |  |
+| service.enabled | bool | `true` |  |
+| service.annotations | object | `{}` |  |
+| service.labels | object | `{}` |  |
+| service.type | string | `"ClusterIP"` |  |
+| service.port | int | `8080` |  |
+| ingress.enabled | bool | `false` |  |
+| ingress.className | string | `""` |  |
+| ingress.labels | object | `{}` |  |
+| ingress.annotations | object | `{}` |  |
+| ingress.hosts[0].host | string | `"chart-example.local"` |  |
+| ingress.hosts[0].paths | list | `[]` |  |
+| ingress.tls | list | `[]` |  |
+| nodeSelector | object | `{}` |  |
+| tolerations | list | `[]` |  |
+| affinity | object | `{}` |  |
+| networkPolicy.enabled | bool | `false` |  |
+| networkPolicy.egress | list | `[]` |  |
+| views.dashboard.policyReports | bool | `true` |  |
+| views.dashboard.clusterPolicyReports | bool | `true` |  |
+| views.logs | bool | `true` |  |
+| views.policyReports | bool | `true` |  |
+| views.clusterPolicyReports | bool | `true` |  |
+| views.kyvernoPolicies | bool | `true` |  |
+| views.kyvernoVerifyImages | bool | `true` |  |
+
+## Contributing
+
+Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.

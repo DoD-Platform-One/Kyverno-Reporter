@@ -1,0 +1,16 @@
+{{- if and .Values.istio.enabled .Values.monitoring.enabled (eq .Values.istio.mtls.mode "STRICT") }}
+apiVersion: "security.istio.io/v1beta1"
+kind: PeerAuthentication
+metadata:
+  name: {{ include "policyreporter.fullname" . }}-exception-prometheus-scraping
+  namespace: {{ .Release.Namespace }}
+  labels: {{ include "policyreporter.labels" . | nindent 4 }}
+spec:
+  mtls:
+    mode: {{ .Values.istio.mtls.mode }}
+  selector:
+    matchLabels: {{ include "policyreporter.selectorLabels" . | nindent 6 }}
+  portLevelMtls:
+    "{{ .Values.service.port }}":
+      mode: PERMISSIVE
+{{- end }}
