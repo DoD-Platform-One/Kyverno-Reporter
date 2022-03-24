@@ -1,6 +1,6 @@
 # policy-reporter
 
-![Version: 2.6.2-bb.0](https://img.shields.io/badge/Version-2.6.2--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.3.1](https://img.shields.io/badge/AppVersion-2.3.1-informational?style=flat-square)
+![Version: 2.7.0-bb.0](https://img.shields.io/badge/Version-2.7.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.0](https://img.shields.io/badge/AppVersion-2.4.0-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -39,7 +39,7 @@ helm install policy-reporter chart/
 | image.registry | string | `"ghcr.io"` |  |
 | image.repository | string | `"kyverno/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.3.1"` |  |
+| image.tag | string | `"2.4.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | replicaCount | int | `1` |  |
 | deploymentStrategy | object | `{}` |  |
@@ -71,6 +71,9 @@ helm install policy-reporter chart/
 | networkPolicy.ingress | list | `[]` |  |
 | rest.enabled | bool | `false` |  |
 | metrics.enabled | bool | `false` |  |
+| reportFilter.namespaces.include | list | `[]` |  |
+| reportFilter.namespaces.exclude | list | `[]` |  |
+| reportFilter.clusterReports.disabled | bool | `false` |  |
 | ui.enabled | bool | `false` |  |
 | kyvernoPlugin.enabled | bool | `false` |  |
 | monitoring.enabled | bool | `false` |  |
@@ -126,6 +129,16 @@ helm install policy-reporter chart/
 | livenessProbe.httpGet.port | string | `"http"` |  |
 | readinessProbe.httpGet.path | string | `"/healthz"` |  |
 | readinessProbe.httpGet.port | string | `"http"` |  |
+| networkPolicies.enabled | bool | `false` |  |
+| networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
+| openshift | bool | `false` |  |
+| istio.enabled | bool | `false` |  |
+| istio.mtls.mode | string | `"STRICT"` |  |
+| bbtests.enabled | bool | `false` |  |
+| bbtests.cypress.artifacts | bool | `true` |  |
+| bbtests.cypress.envs.cypress_grafana_url | string | `"http://monitoring-grafana.monitoring.svc.cluster.local"` |  |
+| bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"` |  |
+| bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
 
 ## Contributing
 
@@ -162,8 +175,8 @@ helm install kyvernoPlugin chart/
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"kyverno/policy-reporter-kyverno-plugin"` |  |
+| image.registry | string | `"registry1.dso.mil"` |  |
+| image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-kyverno-plugin"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.tag | string | `"1.2.1"` |  |
 | imagePullSecrets | list | `[]` |  |
@@ -314,8 +327,8 @@ helm install ui chart/
 | displayMode | string | `""` |  |
 | log.size | int | `200` |  |
 | plugins.kyverno | bool | `false` |  |
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"kyverno/policy-reporter-ui"` |  |
+| image.registry | string | `"registry1.dso.mil"` |  |
+| image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
 | image.tag | string | `"1.3.3"` |  |
 | imagePullSecrets | list | `[]` |  |
