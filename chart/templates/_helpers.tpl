@@ -34,7 +34,9 @@ helm.sh/chart: {{ include "policyreporter.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: reporting
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -74,10 +76,22 @@ Create UI target host based on configuration
 {{- end }}
 {{- end }}
 
-{{- define "kyverno.securityContext" -}}
+{{- define "policyreporter.securityContext" -}}
 {{- if semverCompare "<1.19" .Capabilities.KubeVersion.Version }}
-{{ toYaml (omit .Values.securityContext "seccompProfile") }}
+{{- toYaml (omit .Values.securityContext "seccompProfile") }}
 {{- else }}
-{{ toYaml .Values.securityContext }}
+{{- toYaml .Values.securityContext }}
+{{- end }}
+{{- end }}
+
+{{- define "policyreporter.podDisruptionBudget" -}}
+{{- if and .Values.podDisruptionBudget.minAvailable .Values.podDisruptionBudget.maxUnavailable }}
+{{- fail "Cannot set both .Values.podDisruptionBudget.minAvailable and .Values.podDisruptionBudget.maxUnavailable" -}}
+{{- end }}
+{{- if not .Values.podDisruptionBudget.maxUnavailable }}
+minAvailable: {{ default 1 .Values.podDisruptionBudget.minAvailable }}
+{{- end }}
+{{- if .Values.podDisruptionBudget.maxUnavailable }}
+maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
 {{- end }}
 {{- end }}

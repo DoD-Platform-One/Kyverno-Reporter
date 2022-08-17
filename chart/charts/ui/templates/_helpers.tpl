@@ -34,7 +34,9 @@ helm.sh/chart: {{ include "ui.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: ui
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -102,7 +104,7 @@ Create the name of the service account to use
 {{- end }}
 {{- end }}
 
-{{- define "kyverno.securityContext" -}}
+{{- define "ui.securityContext" -}}
 {{- if semverCompare "<1.19" .Capabilities.KubeVersion.Version }}
 {{ toYaml (omit .Values.securityContext "seccompProfile") }}
 {{- else }}

@@ -1,5 +1,6 @@
 loki:
   host: {{ .Values.target.loki.host | quote }}
+  path: {{ .Values.target.loki.path | quote }}
   minimumPriority: {{ .Values.target.loki.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.loki.skipExistingOnStartup }}
   {{- with .Values.target.loki.customLabels }}
@@ -8,6 +9,14 @@ loki:
   {{- end }}
   {{- with .Values.target.loki.sources }}
   sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.loki.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.loki.channels }}
+  channels:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -21,6 +30,14 @@ elasticsearch:
   sources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.target.elasticsearch.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.elasticsearch.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 slack:
   webhook: {{ .Values.target.slack.webhook | quote }}
@@ -28,6 +45,14 @@ slack:
   skipExistingOnStartup: {{ .Values.target.slack.skipExistingOnStartup }}
   {{- with .Values.target.slack.sources }}
   sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.slack.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.slack.channels }}
+  channels:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -39,13 +64,47 @@ discord:
   sources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.target.discord.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.discord.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 teams:
   webhook: {{ .Values.target.teams.webhook | quote }}
+  skipTLS: {{ .Values.target.teams.skipTLS }}
   minimumPriority: {{ .Values.target.teams.minimumPriority | quote }}
   skipExistingOnStartup: {{ .Values.target.teams.skipExistingOnStartup }}
   {{- with .Values.target.teams.sources }}
   sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.teams.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.teams.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+webhook:
+  host: {{ .Values.target.webhook.host | quote }}
+  minimumPriority: {{ .Values.target.webhook.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.webhook.skipExistingOnStartup }}
+  {{- with .Values.target.webhook.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.webhook.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.webhook.channels }}
+  channels:
     {{- toYaml . | nindent 4 }}
   {{- end }}
 
@@ -71,11 +130,51 @@ s3:
   sources:
     {{- toYaml . | nindent 4 }}
   {{- end }}
+  {{- with .Values.target.s3.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.s3.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+
+kinesis:
+  accessKeyID: {{ .Values.target.kinesis.accessKeyID }}
+  secretAccessKey:  {{ .Values.target.kinesis.secretAccessKey }}
+  region: {{ .Values.target.kinesis.region }}
+  endpoint: {{ .Values.target.kinesis.endpoint }}
+  streamName: {{ .Values.target.kinesis.streamName }}
+  minimumPriority: {{ .Values.target.kinesis.minimumPriority | quote }}
+  skipExistingOnStartup: {{ .Values.target.kinesis.skipExistingOnStartup }}
+  {{- with .Values.target.kinesis.sources }}
+  sources:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.kinesis.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.target.kinesis.channels }}
+  channels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 {{- with .Values.policyPriorities }}
 priorityMap:
   {{- toYaml . | nindent 2 }}
 {{- end }}
+
+metrics:
+  mode: {{ .Values.metrics.mode }}
+  {{- with .Values.metrics.filter }}
+  filter:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
+  {{- with .Values.metrics.customLabels }}
+  customLabels:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
 
 reportFilter:
   namespaces:
@@ -89,3 +188,15 @@ reportFilter:
     {{- end }}
   clusterReports:
     disabled: {{ .Values.reportFilter.clusterReports.disabled }}
+
+leaderElection:
+  enabled: {{ or .Values.leaderElection.enabled (gt (int .Values.replicaCount) 1) }}
+  releaseOnCancel: {{ .Values.leaderElection.releaseOnCancel }}
+  leaseDuration: {{ .Values.leaderElection.leaseDuration }}
+  renewDeadline: {{ .Values.leaderElection.renewDeadline }}
+  retryPeriod: {{ .Values.leaderElection.retryPeriod }}
+
+{{- with .Values.redis }}
+redis:
+  {{- toYaml . | nindent 2 }}
+{{- end }}

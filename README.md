@@ -1,6 +1,6 @@
 # policy-reporter
 
-![Version: 2.7.0-bb.0](https://img.shields.io/badge/Version-2.7.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.4.0](https://img.shields.io/badge/AppVersion-2.4.0-informational?style=flat-square)
+![Version: 2.11.0-bb.0](https://img.shields.io/badge/Version-2.11.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.0](https://img.shields.io/badge/AppVersion-2.8.0-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -36,13 +36,15 @@ helm install policy-reporter chart/
 
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
-| image.registry | string | `"ghcr.io"` |  |
-| image.repository | string | `"kyverno/policy-reporter"` |  |
+| image.registry | string | `"registry1.dso.mil"` |  |
+| image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.4.0"` |  |
+| image.tag | string | `"2.8.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | replicaCount | int | `1` |  |
 | deploymentStrategy | object | `{}` |  |
+| port.name | string | `"http"` |  |
+| port.number | int | `8080` |  |
 | annotations | object | `{}` |  |
 | rbac.enabled | bool | `true` |  |
 | serviceAccount.create | bool | `true` |  |
@@ -55,6 +57,7 @@ helm install policy-reporter chart/
 | service.port | int | `8080` |  |
 | podSecurityContext.fsGroup | int | `1234` |  |
 | securityContext.runAsUser | int | `1234` |  |
+| securityContext.runAsGroup | int | `1234` |  |
 | securityContext.runAsNonRoot | bool | `true` |  |
 | securityContext.privileged | bool | `false` |  |
 | securityContext.allowPrivilegeEscalation | bool | `false` |  |
@@ -71,6 +74,9 @@ helm install policy-reporter chart/
 | networkPolicy.ingress | list | `[]` |  |
 | rest.enabled | bool | `false` |  |
 | metrics.enabled | bool | `false` |  |
+| metrics.mode | string | `"detailed"` |  |
+| metrics.customLabels | list | `[]` |  |
+| profiling.enabled | bool | `false` |  |
 | reportFilter.namespaces.include | list | `[]` |  |
 | reportFilter.namespaces.exclude | list | `[]` |  |
 | reportFilter.clusterReports.disabled | bool | `false` |  |
@@ -79,40 +85,83 @@ helm install policy-reporter chart/
 | monitoring.enabled | bool | `false` |  |
 | global.plugins.kyverno | bool | `false` |  |
 | global.backend | string | `""` |  |
-| global.port | int | `8080` |  |
 | global.fullnameOverride | string | `""` |  |
 | global.labels | object | `{}` |  |
 | policyPriorities | object | `{}` |  |
+| emailReports.clusterName | string | `""` |  |
+| emailReports.smtp.host | string | `""` |  |
+| emailReports.smtp.port | int | `465` |  |
+| emailReports.smtp.username | string | `""` |  |
+| emailReports.smtp.password | string | `""` |  |
+| emailReports.smtp.from | string | `""` |  |
+| emailReports.smtp.encryption | string | `""` |  |
+| emailReports.summary.enabled | bool | `false` |  |
+| emailReports.summary.schedule | string | `"0 8 * * *"` |  |
+| emailReports.summary.activeDeadlineSeconds | int | `300` |  |
+| emailReports.summary.backoffLimit | int | `3` |  |
+| emailReports.summary.ttlSecondsAfterFinished | int | `0` |  |
+| emailReports.summary.restartPolicy | string | `"Never"` |  |
+| emailReports.summary.to | list | `[]` |  |
+| emailReports.summary.filter | object | `{}` |  |
+| emailReports.summary.channels | list | `[]` |  |
+| emailReports.violations.enabled | bool | `false` |  |
+| emailReports.violations.schedule | string | `"0 8 * * *"` |  |
+| emailReports.violations.activeDeadlineSeconds | int | `300` |  |
+| emailReports.violations.backoffLimit | int | `3` |  |
+| emailReports.violations.ttlSecondsAfterFinished | int | `0` |  |
+| emailReports.violations.restartPolicy | string | `"Never"` |  |
+| emailReports.violations.to | list | `[]` |  |
+| emailReports.violations.filter | object | `{}` |  |
+| emailReports.violations.channels | list | `[]` |  |
 | existingTargetConfig.enabled | bool | `false` |  |
 | existingTargetConfig.name | string | `""` |  |
 | existingTargetConfig.subPath | string | `""` |  |
 | target.loki.host | string | `""` |  |
+| target.loki.path | string | `""` |  |
 | target.loki.minimumPriority | string | `""` |  |
 | target.loki.sources | list | `[]` |  |
 | target.loki.skipExistingOnStartup | bool | `true` |  |
 | target.loki.customLabels | object | `{}` |  |
+| target.loki.filter | object | `{}` |  |
+| target.loki.channels | list | `[]` |  |
 | target.elasticsearch.host | string | `""` |  |
 | target.elasticsearch.index | string | `""` |  |
 | target.elasticsearch.rotation | string | `""` |  |
 | target.elasticsearch.minimumPriority | string | `""` |  |
 | target.elasticsearch.sources | list | `[]` |  |
 | target.elasticsearch.skipExistingOnStartup | bool | `true` |  |
+| target.elasticsearch.filter | object | `{}` |  |
+| target.elasticsearch.channels | list | `[]` |  |
 | target.slack.webhook | string | `""` |  |
 | target.slack.minimumPriority | string | `""` |  |
 | target.slack.sources | list | `[]` |  |
 | target.slack.skipExistingOnStartup | bool | `true` |  |
+| target.slack.filter | object | `{}` |  |
+| target.slack.channels | list | `[]` |  |
 | target.discord.webhook | string | `""` |  |
 | target.discord.minimumPriority | string | `""` |  |
 | target.discord.sources | list | `[]` |  |
 | target.discord.skipExistingOnStartup | bool | `true` |  |
+| target.discord.filter | object | `{}` |  |
+| target.discord.channels | list | `[]` |  |
 | target.teams.webhook | string | `""` |  |
+| target.teams.skipTLS | bool | `false` |  |
 | target.teams.minimumPriority | string | `""` |  |
 | target.teams.sources | list | `[]` |  |
 | target.teams.skipExistingOnStartup | bool | `true` |  |
+| target.teams.filter | object | `{}` |  |
+| target.teams.channels | list | `[]` |  |
 | target.ui.host | string | `""` |  |
 | target.ui.minimumPriority | string | `"warning"` |  |
 | target.ui.sources | list | `[]` |  |
 | target.ui.skipExistingOnStartup | bool | `true` |  |
+| target.webhook.host | string | `""` |  |
+| target.webhook.headers | object | `{}` |  |
+| target.webhook.minimumPriority | string | `""` |  |
+| target.webhook.sources | list | `[]` |  |
+| target.webhook.skipExistingOnStartup | bool | `true` |  |
+| target.webhook.filter | object | `{}` |  |
+| target.webhook.channels | list | `[]` |  |
 | target.s3.accessKeyID | string | `""` |  |
 | target.s3.secretAccessKey | string | `""` |  |
 | target.s3.region | string | `""` |  |
@@ -122,6 +171,31 @@ helm install policy-reporter chart/
 | target.s3.minimumPriority | string | `""` |  |
 | target.s3.sources | list | `[]` |  |
 | target.s3.skipExistingOnStartup | bool | `true` |  |
+| target.s3.filter | object | `{}` |  |
+| target.s3.channels | list | `[]` |  |
+| target.kinesis.accessKeyID | string | `""` |  |
+| target.kinesis.secretAccessKey | string | `""` |  |
+| target.kinesis.region | string | `""` |  |
+| target.kinesis.endpoint | string | `""` |  |
+| target.kinesis.streamName | string | `""` |  |
+| target.kinesis.minimumPriority | string | `""` |  |
+| target.kinesis.sources | list | `[]` |  |
+| target.kinesis.skipExistingOnStartup | bool | `true` |  |
+| target.kinesis.filter | object | `{}` |  |
+| target.kinesis.channels | list | `[]` |  |
+| leaderElection.enabled | bool | `false` |  |
+| leaderElection.releaseOnCancel | bool | `true` |  |
+| leaderElection.leaseDuration | int | `15` |  |
+| leaderElection.renewDeadline | int | `10` |  |
+| leaderElection.retryPeriod | int | `2` |  |
+| redis.enabled | bool | `false` |  |
+| redis.address | string | `""` |  |
+| redis.database | int | `0` |  |
+| redis.prefix | string | `"policy-reporter"` |  |
+| redis.username | string | `""` |  |
+| redis.password | string | `""` |  |
+| podDisruptionBudget.minAvailable | int | `1` | Configures the minimum available pods for policy-reporter disruptions. Cannot be used if `maxUnavailable` is set. |
+| podDisruptionBudget.maxUnavailable | string | `nil` | Configures the maximum unavailable pods for policy-reporter disruptions. Cannot be used if `minAvailable` is set. |
 | nodeSelector | object | `{}` |  |
 | tolerations | list | `[]` |  |
 | affinity | object | `{}` |  |
@@ -139,238 +213,6 @@ helm install policy-reporter chart/
 | bbtests.cypress.envs.cypress_grafana_url | string | `"http://monitoring-grafana.monitoring.svc.cluster.local"` |  |
 | bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"` |  |
 | bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
-
-## Contributing
-
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
-# kyvernoPlugin
-
-![Version: 1.2.1](https://img.shields.io/badge/Version-1.2.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.2.1](https://img.shields.io/badge/AppVersion-1.2.1-informational?style=flat-square)
-
-Policy Reporter Kyverno Plugin
-
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
-
-## Pre-Requisites
-
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
-
-Install Helm
-
-https://helm.sh/docs/intro/install/
-
-## Deployment
-
-* Clone down the repository
-* cd into directory
-```bash
-helm install kyvernoPlugin chart/
-```
-
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| image.registry | string | `"registry1.dso.mil"` |  |
-| image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-kyverno-plugin"` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"1.2.1"` |  |
-| imagePullSecrets | list | `[]` |  |
-| replicaCount | int | `1` |  |
-| deploymentStrategy | object | `{}` |  |
-| annotations | object | `{}` |  |
-| rbac.enabled | bool | `true` |  |
-| serviceAccount.create | bool | `true` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.name | string | `""` |  |
-| service.enabled | bool | `true` |  |
-| service.annotations | object | `{}` |  |
-| service.labels | object | `{}` |  |
-| service.type | string | `"ClusterIP"` |  |
-| securityContext.runAsUser | int | `1234` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.privileged | bool | `false` |  |
-| securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| podAnnotations | object | `{}` |  |
-| podLabels | object | `{}` |  |
-| resources | object | `{}` |  |
-| nodeSelector | object | `{}` |  |
-| tolerations | list | `[]` |  |
-| affinity | object | `{}` |  |
-| rest.enabled | bool | `true` |  |
-| metrics.enabled | bool | `true` |  |
-| networkPolicy.enabled | bool | `false` |  |
-| networkPolicy.egress[0].to | string | `nil` |  |
-| networkPolicy.egress[0].ports[0].protocol | string | `"TCP"` |  |
-| networkPolicy.egress[0].ports[0].port | int | `6443` |  |
-| networkPolicy.ingress | list | `[]` |  |
-
-## Contributing
-
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
-# monitoring
-
-![Version: 2.2.0](https://img.shields.io/badge/Version-2.2.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 0.0.0](https://img.shields.io/badge/AppVersion-0.0.0-informational?style=flat-square)
-
-Policy Reporter Monitoring with predefined ServiceMonitor and Grafana Dashboards
-
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
-
-## Pre-Requisites
-
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
-
-Install Helm
-
-https://helm.sh/docs/intro/install/
-
-## Deployment
-
-* Clone down the repository
-* cd into directory
-```bash
-helm install monitoring chart/
-```
-
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| plugins.kyverno | bool | `false` |  |
-| serviceMonitor.namespace | string | `nil` |  |
-| serviceMonitor.labels | object | `{}` |  |
-| serviceMonitor.relabelings | list | `[]` |  |
-| serviceMonitor.metricRelabelings | list | `[]` |  |
-| kyverno.serviceMonitor.relabelings | list | `[]` |  |
-| kyverno.serviceMonitor.metricRelabelings | list | `[]` |  |
-| grafana.namespace | string | `nil` |  |
-| grafana.dashboards.enabled | bool | `true` |  |
-| grafana.dashboards.label | string | `"grafana_dashboard"` |  |
-| grafana.folder.annotation | string | `"grafana_folder"` |  |
-| grafana.folder.name | string | `"Policy Reporter"` |  |
-| policyReportDetails.firstStatusRow.height | int | `8` |  |
-| policyReportDetails.secondStatusRow.enabled | bool | `true` |  |
-| policyReportDetails.secondStatusRow.height | int | `2` |  |
-| policyReportDetails.statusTimeline.enabled | bool | `true` |  |
-| policyReportDetails.statusTimeline.height | int | `8` |  |
-| policyReportDetails.passTable.enabled | bool | `true` |  |
-| policyReportDetails.passTable.height | int | `8` |  |
-| policyReportDetails.failTable.enabled | bool | `true` |  |
-| policyReportDetails.failTable.height | int | `8` |  |
-| policyReportDetails.warningTable.enabled | bool | `true` |  |
-| policyReportDetails.warningTable.height | int | `4` |  |
-| policyReportDetails.errorTable.enabled | bool | `true` |  |
-| policyReportDetails.errorTable.height | int | `4` |  |
-| clusterPolicyReportDetails.statusRow.height | int | `6` |  |
-| clusterPolicyReportDetails.statusTimeline.enabled | bool | `true` |  |
-| clusterPolicyReportDetails.statusTimeline.height | int | `8` |  |
-| clusterPolicyReportDetails.passTable.enabled | bool | `true` |  |
-| clusterPolicyReportDetails.passTable.height | int | `8` |  |
-| clusterPolicyReportDetails.failTable.enabled | bool | `true` |  |
-| clusterPolicyReportDetails.failTable.height | int | `8` |  |
-| clusterPolicyReportDetails.warningTable.enabled | bool | `true` |  |
-| clusterPolicyReportDetails.warningTable.height | int | `4` |  |
-| clusterPolicyReportDetails.errorTable.enabled | bool | `true` |  |
-| clusterPolicyReportDetails.errorTable.height | int | `4` |  |
-| policyReportOverview.failingSummaryRow.height | int | `8` |  |
-| policyReportOverview.failingTimeline.height | int | `10` |  |
-| policyReportOverview.failingPolicyRuleTable.height | int | `10` |  |
-| policyReportOverview.failingClusterPolicyRuleTable.height | int | `10` |  |
-
-## Contributing
-
-Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
-# ui
-
-![Version: 2.3.3](https://img.shields.io/badge/Version-2.3.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 1.3.3](https://img.shields.io/badge/AppVersion-1.3.3-informational?style=flat-square)
-
-Policy Reporter UI
-
-## Learn More
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
-
-## Pre-Requisites
-
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
-
-Install Helm
-
-https://helm.sh/docs/intro/install/
-
-## Deployment
-
-* Clone down the repository
-* cd into directory
-```bash
-helm install ui chart/
-```
-
-## Values
-
-| Key | Type | Default | Description |
-|-----|------|---------|-------------|
-| enabled | bool | `false` |  |
-| displayMode | string | `""` |  |
-| log.size | int | `200` |  |
-| plugins.kyverno | bool | `false` |  |
-| image.registry | string | `"registry1.dso.mil"` |  |
-| image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
-| image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"1.3.3"` |  |
-| imagePullSecrets | list | `[]` |  |
-| replicaCount | int | `1` |  |
-| deploymentStrategy | object | `{}` |  |
-| securityContext.runAsUser | int | `1234` |  |
-| securityContext.runAsNonRoot | bool | `true` |  |
-| securityContext.privileged | bool | `false` |  |
-| securityContext.allowPrivilegeEscalation | bool | `false` |  |
-| securityContext.readOnlyRootFilesystem | bool | `true` |  |
-| securityContext.capabilities.drop[0] | string | `"ALL"` |  |
-| securityContext.seccompProfile.type | string | `"RuntimeDefault"` |  |
-| podAnnotations | object | `{}` |  |
-| podLabels | object | `{}` |  |
-| resources | object | `{}` |  |
-| serviceAccount.create | bool | `false` |  |
-| serviceAccount.annotations | object | `{}` |  |
-| serviceAccount.name | string | `""` |  |
-| service.enabled | bool | `true` |  |
-| service.annotations | object | `{}` |  |
-| service.labels | object | `{}` |  |
-| service.type | string | `"ClusterIP"` |  |
-| service.port | int | `8080` |  |
-| ingress.enabled | bool | `false` |  |
-| ingress.className | string | `""` |  |
-| ingress.labels | object | `{}` |  |
-| ingress.annotations | object | `{}` |  |
-| ingress.hosts[0].host | string | `"chart-example.local"` |  |
-| ingress.hosts[0].paths | list | `[]` |  |
-| ingress.tls | list | `[]` |  |
-| nodeSelector | object | `{}` |  |
-| tolerations | list | `[]` |  |
-| affinity | object | `{}` |  |
-| networkPolicy.enabled | bool | `false` |  |
-| networkPolicy.egress | list | `[]` |  |
-| views.dashboard.policyReports | bool | `true` |  |
-| views.dashboard.clusterPolicyReports | bool | `true` |  |
-| views.logs | bool | `true` |  |
-| views.policyReports | bool | `true` |  |
-| views.clusterPolicyReports | bool | `true` |  |
-| views.kyvernoPolicies | bool | `true` |  |
-| views.kyvernoVerifyImages | bool | `true` |  |
 
 ## Contributing
 
