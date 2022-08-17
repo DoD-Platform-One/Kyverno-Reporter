@@ -1,16 +1,11 @@
 image:
-  # registry: registry1.dso.mil
-  # repository: ironbank/nirmata/policy-reporter/policy-reporter
-  registry: ghcr.io
-  repository: kyverno/policy-reporter
+  registry: registry1.dso.mil
+  repository: ironbank/nirmata/policy-reporter/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.4.0
+  tag: 2.8.0
 
 imagePullSecrets: []
 
-# Deploy not more than one replica
-# Policy Reporter doesn't scale yet.
-# Each pod will report each change.
 replicaCount: 1
 
 deploymentStrategy: {}
@@ -19,7 +14,14 @@ deploymentStrategy: {}
   #  maxUnavailable: 25%
   # type: RollingUpdate
 
-# Key/value pairs that are attached to Deployment.
+# When using a custom port together with the PolicyReporter UI
+# the port has also to be changed in the UI subchart as well because it can't access the parent values.
+# You can change the port under `ui.policyReporter.port`
+port:
+  name: http
+  number: 8080
+
+# Key/value pairs that are attached to all resources.
 annotations: {}
 
 # Create cluster role policies
@@ -51,6 +53,7 @@ podSecurityContext:
 
 securityContext:
   runAsUser: 1234
+  runAsGroup: 1234
   runAsNonRoot: true
   privileged: false
   allowPrivilegeEscalation: false
@@ -98,6 +101,16 @@ rest:
 # Prometheus Metrics API
 metrics:
   enabled: false
+  mode: detailed # available modes are detailed, simple and custom
+  customLabels: [] # only used for custom mode. Supported fields are: ["namespace", "rule", "policy", "report" // PolicyReport name, "kind" // resource kind, "name" // resource name, "status", "severity", "category", "source"]
+#  filter:
+#    sources:
+#      exclude: ["Trivy CIS Kube Bench"]
+#    status:
+#      exclude: ["pass", "skip"]
+
+profiling:
+  enabled: false
 
 # Filter PolicyReport resources to process
 reportFilter:
@@ -129,8 +142,7 @@ global:
     kyverno: false
   # The name of service policy-report. Defaults to ReleaseName.
   backend: ""
-  # Service Port number
-  port: 8080
+  # overwrite the fullname of all resources including subcharts
   fullnameOverride: ""
   # additional labels added on each resource
   labels: {}
@@ -141,6 +153,69 @@ global:
 #   default: warning
 #   require-ns-labels: error
 policyPriorities: {}
+
+emailReports:
+  clusterName: "" # (optional) - displayed in the email report if configured
+  smtp:
+    host: ""
+    port: 465
+    username: ""
+    password: ""
+    from: "" # displayed from email address
+    encryption: "" # default is none, supports ssl/tls and starttls
+
+  # basic summary report
+  summary:
+    enabled: false
+    schedule: "0 8 * * *" # CronJob schedule defines when the report will be send
+    activeDeadlineSeconds: 300 # timeout in seconds
+    backoffLimit: 3 # retry counter
+    ttlSecondsAfterFinished: 0
+    restartPolicy: Never # pod restart policy
+
+    to: [] # list of receiver email addresses
+    filter: {} # optional filters
+    #  disableClusterReports: false # remove ClusterPolicyResults from Reports
+    #  namespaces:
+    #    include: []
+    #    exclude: []
+    #  sources:
+    #    include: []
+    #    exclude: []
+    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses
+    #  - to: ['team-a@company.org']
+    #    filter:
+    #      disableClusterReports: true
+    #      namespaces:
+    #        include: ['team-a-*']
+    #      sources:
+    #        include: ['Kyverno']
+  # violation summary report
+  violations:
+    enabled: false
+    schedule: "0 8 * * *" # CronJob schedule defines when the report will be send
+    activeDeadlineSeconds: 300 # timeout in seconds
+    backoffLimit: 3 # retry counter
+    ttlSecondsAfterFinished: 0
+    restartPolicy: Never # pod restart policy
+
+    to: [] # list of receiver email addresses
+    filter: {} # optional filters
+    #  disableClusterReports: false # remove ClusterPolicyResults from Reports
+    #  namespaces:
+    #    include: []
+    #    exclude: []
+    #  sources:
+    #    include: []
+    #    exclude: []
+    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses    channels: [] # (optional) channels can be used to to send only a subset of namespaces / sources to dedicated email addresses
+    #  - to: ['team-a@company.org']
+    #    filter:
+    #      disableClusterReports: true
+    #      namespaces:
+    #        include: ['team-a-*']
+    #      sources:
+    #        include: ['Kyverno']
 
 # Reference a configuration which already exists instead of creating one
 existingTargetConfig:
@@ -155,6 +230,8 @@ target:
   loki:
     # loki host address
     host: ""
+    # loki api path, defaults to "/api/prom/push" (deprecated)
+    path: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to loki
@@ -163,6 +240,23 @@ target:
     skipExistingOnStartup: true
     # Added as additional labels to each Loki event
     customLabels: {}
+    # Filter Results which should send to this target by namespaces, priorities or policies
+    # Wildcars for namespaces and policies are supported, you can either define exclude or include values
+    # Filters are available for all targets except the UI
+    filter: {}
+#      namespaces:
+#        include: ["develop"]
+#      priorities:
+#        exclude: ["debug", "info", "error"]
+    channels: []
+#    - host: "http://loki.loki-stack:3100"
+#      sources: []
+#      customLabels: {}
+#      filter:
+#        namespaces:
+#          include: ["develop"]
+#        priorities:
+#          exclude: ["debug", "info", "error"]
 
   elasticsearch:
     # elasticsearch host address
@@ -178,6 +272,10 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional elasticsearch channels with different configurations and filters
+    channels: []
 
   slack:
     # slack app webhook address
@@ -188,6 +286,23 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional slack channels with different configurations and filters
+    channels: []
+#    - webhook: "https://slack.webhook1"
+#      filter:
+#        namespaces:
+#          include: ["develop"]
+#        priorities:
+#          exclude: ["debug", "info", "error"]
+#        policies:
+#          include: ["require-run-as-nonroot"]
+#    - webhook: "https://slack.webhook2"
+#      minimumPriority: "warning"
+#      filter:
+#        namespaces:
+#          include: ["team-a-*"]
 
   discord:
     # discord app webhook address
@@ -198,19 +313,29 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional discord channels with different configurations and filters
+    channels: []
 
   teams:
     # teams webhook address
     webhook: ""
+    # skip TLS
+    skipTLS: false
     # minimum priority "" < info < warning < critical < error
     minimumPriority: ""
     # list of sources which should send to teams
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional teams channels with different configurations and filters
+    channels: []
 
   ui:
-    # teams webhook address
+    # ui host address
     host: ""
     # minimum priority "" < info < warning < critical < error
     minimumPriority: "warning"
@@ -218,6 +343,22 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+
+  webhook:
+    # webhook host address
+    host: ""
+    # additional http headers
+    headers: {}
+    # minimum priority "" < info < warning < critical < error
+    minimumPriority: ""
+    # list of sources which should send to the UI Log
+    sources: []
+    # Skip already existing PolicyReportResults on startup
+    skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional webhook channels with different configurations and filters
+    channels: []
 
   s3:
     # S3 access key
@@ -238,6 +379,60 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional s3 channels with different configurations and filters
+    channels: []
+
+  kinesis:
+    # AWS access key
+    accessKeyID: ""
+    # AWS secret access key
+    secretAccessKey: ""
+    # AWS region
+    region: ""
+    # AWS Kinesis endpoint
+    endpoint: ""
+    # AWS Kinesis stream name
+    streamName: ""
+    # minimum priority "" < info < warning < critical < error
+    minimumPriority: ""
+    # list of sources which should send to S3
+    sources: []
+    # Skip already existing PolicyReportResults on startup
+    skipExistingOnStartup: true
+    # filter results send by namespaces, policies and priorities
+    filter: {}
+    # add additional s3 channels with different configurations and filters
+    channels: []
+
+# required when policy-reporter runs in HA mode and you have targets configured
+# if no targets are configured, leaderElection is disabled automatically
+# will be enabled when replicaCount > 1
+leaderElection:
+  enabled: false
+  releaseOnCancel: true
+  leaseDuration: 15
+  renewDeadline: 10
+  retryPeriod: 2
+
+# use redis as external result cache instead of the in memory cache
+redis:
+  enabled: false
+  address: ""
+  database: 0
+  prefix: "policy-reporter"
+  username: ""
+  password: ""
+
+# enabled if replicaCount > 1
+podDisruptionBudget:
+  # -- Configures the minimum available pods for policy-reporter disruptions.
+  # Cannot be used if `maxUnavailable` is set.
+  minAvailable: 1
+  # -- Configures the maximum unavailable pods for policy-reporter disruptions.
+  # Cannot be used if `minAvailable` is set.
+  maxUnavailable:
 
 # Node labels for pod assignment
 # ref: https://kubernetes.io/docs/user-guide/node-selection/

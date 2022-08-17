@@ -6,8 +6,11 @@ metadata:
   namespace: {{ include "monitoring.namespace" . }}
   annotations:
     {{ .Values.grafana.folder.annotation }}: {{ .Values.grafana.folder.name }}
+    {{- with .Values.annotations }}
+        {{- toYaml . | nindent 4 }}
+    {{- end }}
   labels:
-    {{ .Values.grafana.dashboards.label }}: "1"
+    {{ .Values.grafana.dashboards.label }}: {{ .Values.grafana.dashboards.value | quote }}
     {{- include "monitoring.labels" . | nindent 4 }}
 data:
   cluster-policy-reporter-details-dashboard.json: |
@@ -73,6 +76,7 @@ data:
     "links": [],
     "panels": [
         {
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {},
@@ -116,7 +120,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"pass\"})",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"pass\"})",
             "instant": true,
             "interval": "",
             "legendFormat": "",
@@ -129,6 +133,7 @@ data:
         "type": "stat"
         },
         {
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {},
@@ -172,7 +177,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"warn\"})",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"warn\"})",
             "instant": true,
             "interval": "",
             "legendFormat": "",
@@ -185,6 +190,7 @@ data:
         "type": "stat"
         },
         {
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {},
@@ -228,7 +234,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"fail\"})",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"fail\"})",
             "instant": true,
             "interval": "",
             "legendFormat": "",
@@ -241,6 +247,7 @@ data:
         "type": "stat"
         },
         {
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {},
@@ -284,7 +291,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"error\"})",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"error\"})",
             "instant": true,
             "interval": "",
             "legendFormat": "",
@@ -302,6 +309,7 @@ data:
         "bars": false,
         "dashLength": 10,
         "dashes": false,
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {}
@@ -345,7 +353,7 @@ data:
         "steppedLine": false,
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\"} > 0) by (status)",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\"} > 0) by (status)",
             "interval": "",
             "legendFormat": "{{`{{ status }}`}}",
             "refId": "A"
@@ -397,6 +405,7 @@ data:
 {{- end }}
 {{- if .Values.clusterPolicyReportDetails.passTable.enabled }}
         ,{
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {
@@ -432,7 +441,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"pass\"}) by (policy,rule,kind,name,status,severity,category)",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", source=~\"$source\", status=\"pass\"}) by (policy,rule,kind,name,status,severity,category,source)",
             "format": "table",
             "instant": true,
             "interval": "",
@@ -454,14 +463,15 @@ data:
                 },
                 "indexByName": {
                     "Time": 0,
-                    "Value": 8,
-                    "category": 1,
+                    "source": 1,
+                    "category": 2,
                     "kind": 3,
                     "name": 4,
                     "policy": 5,
                     "rule": 6,
                     "severity": 2,
-                    "status": 7
+                    "status": 7,
+                    "Value": 8
                 },
                 "renameByName": {
                 "exported_namespace": "namespace"
@@ -474,6 +484,7 @@ data:
 {{- end }}
 {{- if .Values.clusterPolicyReportDetails.failTable.enabled }}
         ,{
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {
@@ -509,7 +520,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"fail\"}) by (policy,rule,kind,name,status,severity,category)",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"fail\"}) by (policy,rule,kind,name,status,severity,category,source)",
             "format": "table",
             "instant": true,
             "interval": "",
@@ -531,14 +542,15 @@ data:
                 },
                 "indexByName": {
                     "Time": 0,
-                    "Value": 8,
-                    "category": 1,
+                    "source": 1,
+                    "category": 2,
                     "kind": 3,
                     "name": 4,
                     "policy": 5,
                     "rule": 6,
                     "severity": 2,
-                    "status": 7
+                    "status": 7,
+                    "Value": 8
                 },
                 "renameByName": {
                 "exported_namespace": "namespace"
@@ -551,6 +563,7 @@ data:
 {{- end }}
 {{- if .Values.clusterPolicyReportDetails.warningTable.enabled }}
         ,{
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {
@@ -583,7 +596,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"warn\"}) by (policy,rule,kind,name,status,severity,category)",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"warn\"}) by (policy,rule,kind,name,status,severity,category,source)",
             "format": "table",
             "instant": true,
             "interval": "",
@@ -605,14 +618,15 @@ data:
                 },
                 "indexByName": {
                     "Time": 0,
-                    "Value": 8,
-                    "category": 1,
+                    "source": 1,
+                    "category": 2,
                     "kind": 3,
                     "name": 4,
                     "policy": 5,
                     "rule": 6,
                     "severity": 2,
-                    "status": 7
+                    "status": 7,
+                    "Value": 8
                 },
                 "renameByName": {
                 "exported_namespace": "namespace"
@@ -625,6 +639,7 @@ data:
 {{- end }}
 {{- if .Values.clusterPolicyReportDetails.errorTable.enabled }}
         ,{
+        "datasource": "${DS_PROMETHEUS}",
         "fieldConfig": {
             "defaults": {
             "custom": {
@@ -657,7 +672,7 @@ data:
         "pluginVersion": "7.1.5",
         "targets": [
             {
-            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", kind=~\"$kind\", status=\"error\"}) by (policy,rule,kind,name,status,severity,category)",
+            "expr": "sum(cluster_policy_report_result{policy=~\"$policy\", category=~\"$category\", severity=~\"$severity\", source=~\"$source\", kind=~\"$kind\", status=\"warn\"}) by (policy,rule,kind,name,status,severity,category,source)",
             "format": "table",
             "instant": true,
             "interval": "",
@@ -679,14 +694,15 @@ data:
                 },
                 "indexByName": {
                     "Time": 0,
-                    "Value": 8,
-                    "category": 1,
+                    "source": 1,
+                    "category": 2,
                     "kind": 3,
                     "name": 4,
                     "policy": 5,
                     "rule": 6,
                     "severity": 2,
-                    "status": 7
+                    "status": 7,
+                    "Value": 8
                 },
                 "renameByName": {
                 "exported_namespace": "namespace"
@@ -706,8 +722,19 @@ data:
     "templating": {
         "list": [
         {
+            "hide": 0,
+            "label": "Datasource",
+            "name": "DS_PROMETHEUS",
+            "options": [],
+            "query": "prometheus",
+            "refresh": 1,
+            "regex": "",
+            "type": "datasource"
+        },
+        {
             "allValue": ".*",
             "current": {},
+            "datasource": "${DS_PROMETHEUS}",
             "definition": "label_values(cluster_policy_report_result, policy)",
             "hide": 0,
             "includeAll": true,
@@ -728,6 +755,7 @@ data:
         },
         {
             "allValue": ".*",
+            "datasource": "${DS_PROMETHEUS}",
             "definition": "label_values(cluster_policy_report_result, category)",
             "hide": 0,
             "includeAll": true,
@@ -748,6 +776,7 @@ data:
         },
         {
             "allValue": ".*",
+            "datasource": "${DS_PROMETHEUS}",
             "definition": "label_values(cluster_policy_report_result, severity)",
             "hide": 0,
             "includeAll": true,
@@ -768,6 +797,7 @@ data:
         },
         {
             "allValue": ".*",
+            "datasource": "${DS_PROMETHEUS}",
             "definition": "label_values(cluster_policy_report_result, kind)",
             "hide": 0,
             "includeAll": true,
@@ -776,6 +806,27 @@ data:
             "name": "kind",
             "options": [],
             "query": "label_values(cluster_policy_report_result, kind)",
+            "refresh": 2,
+            "regex": "",
+            "skipUrlSync": false,
+            "sort": 5,
+            "tagValuesQuery": "",
+            "tags": [],
+            "tagsQuery": "",
+            "type": "query",
+            "useTags": false
+        },
+        {
+            "allValue": ".*",
+            "datasource": "${DS_PROMETHEUS}",
+            "definition": "label_values(cluster_policy_report_result, source)",
+            "hide": 0,
+            "includeAll": true,
+            "label": "Source",
+            "multi": true,
+            "name": "source",
+            "options": [],
+            "query": "label_values(cluster_policy_report_result, source)",
             "refresh": 2,
             "regex": "",
             "skipUrlSync": false,

@@ -2,13 +2,10 @@ image:
   registry: registry1.dso.mil
   repository: ironbank/nirmata/policy-reporter/policy-reporter-kyverno-plugin
   pullPolicy: IfNotPresent
-  tag: 1.2.1
+  tag: 1.4.0
 
 imagePullSecrets: []
 
-# Deploy not more than one replica
-# Policy Reporter doesn't scale yet.
-# Each pod will report each change.
 replicaCount: 1
 
 deploymentStrategy: {}
@@ -17,7 +14,14 @@ deploymentStrategy: {}
   #  maxUnavailable: 25%
   # type: RollingUpdate
 
-# Key/value pairs that are attached to Deployment.
+# When using a custom port together with the PolicyReporter UI
+# the port has also to be changed in the UI subchart as well because it can't access values of other subcharts.
+# You can change the port under `ui.kyvernoPlugin.port`
+port:
+  name: rest
+  number: 8080
+
+# Key/value pairs that are attached to all resources.
 annotations: {}
 
 # Create cluster role policies
@@ -83,6 +87,18 @@ tolerations: []
 # Anti-affinity to disallow deploying client and master nodes on the same worker node
 affinity: {}
 
+# livenessProbe for policy-reporter-kyverno-plugin
+livenessProbe:
+  httpGet:
+    path: /ready
+    port: rest
+
+# readinessProbe for policy-reporter-kyverno-plugin
+readinessProbe:
+  httpGet:
+    path: /healthz
+    port: rest
+
 # REST API
 rest:
   enabled: true
@@ -90,6 +106,34 @@ rest:
 # Prometheus Metrics API
 metrics:
   enabled: true
+
+# create PolicyReports for enforce policies, 
+# based on Events created by Kyverno (>= v1.7.0)
+blockReports:
+  enabled: false
+  eventNamespace: default
+  results: 
+    maxPerReport: 200
+    keepOnlyLatest: false
+
+# required if policy-reporter-kyverno-plugin should run in HA mode and the "blockReports" feature is enabled
+# if "blockReports" is disabled, leaderElection is also disabled automatically
+# will be enabled when replicaCount > 1
+leaderElection:
+  enabled: false
+  releaseOnCancel: true
+  leaseDuration: 15
+  renewDeadline: 10
+  retryPeriod: 2
+
+# enabled if replicaCount > 1
+podDisruptionBudget:
+  # -- Configures the minimum available pods for kyvernoPlugin disruptions.
+  # Cannot be used if `maxUnavailable` is set.
+  minAvailable: 1
+  # -- Configures the maximum unavailable pods for kyvernoPlugin disruptions.
+  # Cannot be used if `minAvailable` is set.
+  maxUnavailable:
 
 # Enable a NetworkPolicy for this chart. Useful on clusters where Network Policies are
 # used and configured in a default-deny fashion.

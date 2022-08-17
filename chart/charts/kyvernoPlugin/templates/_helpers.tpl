@@ -34,7 +34,9 @@ helm.sh/chart: {{ include "kyvernoplugin.chart" . }}
 {{- if .Chart.AppVersion }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
+app.kubernetes.io/component: plugin
 app.kubernetes.io/managed-by: {{ .Release.Service }}
+app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -67,7 +69,7 @@ app.kubernetes.io/name: ui
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
-{{- define "kyverno.securityContext" -}}
+{{- define "kyvernoplugin.securityContext" -}}
 {{- if semverCompare "<1.19" .Capabilities.KubeVersion.Version }}
 {{ toYaml (omit .Values.securityContext "seccompProfile") }}
 {{- else }}
