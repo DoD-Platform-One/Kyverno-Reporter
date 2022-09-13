@@ -2,7 +2,7 @@ image:
   registry: registry1.dso.mil
   repository: ironbank/nirmata/policy-reporter/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.8.0
+  tag: 2.8.3
 
 imagePullSecrets: []
 
@@ -157,6 +157,7 @@ policyPriorities: {}
 emailReports:
   clusterName: "" # (optional) - displayed in the email report if configured
   smtp:
+    secret: "" # (optional) secret name to provide the complete or partial SMTP configuration
     host: ""
     port: 465
     username: ""

@@ -29,6 +29,12 @@ beforeEach(function () {
     Cypress.Cookies.preserveOnce(...namesOfCookies)
   })
   cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
+  
+  cy.get('.pointer > button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
+    if ($expanded === 'false') {
+      cy.get('.pointer > button[id^="collapse-button-"]').click({multiple: true})
+    }
+  })
 })
 
 describe('Validate Grafana Dashboards', {
