@@ -2,6 +2,13 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.11.3-bb.0] - 2022-09-06
+
+### Changed
+
+- Updated chart to 2.11.3 upstream version, updated images to 2.8.3 (reporter) and 1.4.1 (plugin)
+- Fixed dashboard check in cypress test
+
 ## [2.11.0-bb.0] - 2022-08-12
 
 ### Changed

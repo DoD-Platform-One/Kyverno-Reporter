@@ -1,6 +1,6 @@
 # policy-reporter
 
-![Version: 2.11.0-bb.0](https://img.shields.io/badge/Version-2.11.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.0](https://img.shields.io/badge/AppVersion-2.8.0-informational?style=flat-square)
+![Version: 2.11.3-bb-0](https://img.shields.io/badge/Version-2.11.3--bb--0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.8.3](https://img.shields.io/badge/AppVersion-2.8.3-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -39,7 +39,7 @@ helm install policy-reporter chart/
 | image.registry | string | `"registry1.dso.mil"` |  |
 | image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.8.0"` |  |
+| image.tag | string | `"2.8.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | replicaCount | int | `1` |  |
 | deploymentStrategy | object | `{}` |  |
@@ -89,6 +89,7 @@ helm install policy-reporter chart/
 | global.labels | object | `{}` |  |
 | policyPriorities | object | `{}` |  |
 | emailReports.clusterName | string | `""` |  |
+| emailReports.smtp.secret | string | `""` |  |
 | emailReports.smtp.host | string | `""` |  |
 | emailReports.smtp.port | int | `465` |  |
 | emailReports.smtp.username | string | `""` |  |
