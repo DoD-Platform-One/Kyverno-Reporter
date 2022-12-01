@@ -1,6 +1,6 @@
 # policy-reporter
 
-![Version: 2.13.1-bb.0](https://img.shields.io/badge/Version-2.13.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.10.1](https://img.shields.io/badge/AppVersion-2.10.1-informational?style=flat-square)
+![Version: 2.13.4-bb.0](https://img.shields.io/badge/Version-2.13.4--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.10.3](https://img.shields.io/badge/AppVersion-2.10.3-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -39,7 +39,7 @@ helm install policy-reporter chart/
 | image.registry | string | `"registry1.dso.mil"` |  |
 | image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.10.1"` |  |
+| image.tag | string | `"2.10.3"` |  |
 | imagePullSecrets | list | `[]` |  |
 | replicaCount | int | `1` |  |
 | deploymentStrategy | object | `{}` |  |
@@ -140,6 +140,7 @@ helm install policy-reporter chart/
 | target.elasticsearch.minimumPriority | string | `""` |  |
 | target.elasticsearch.sources | list | `[]` |  |
 | target.elasticsearch.skipExistingOnStartup | bool | `true` |  |
+| target.elasticsearch.customFields | object | `{}` |  |
 | target.elasticsearch.filter | object | `{}` |  |
 | target.elasticsearch.channels | list | `[]` |  |
 | target.slack.webhook | string | `""` |  |
@@ -147,7 +148,7 @@ helm install policy-reporter chart/
 | target.slack.minimumPriority | string | `""` |  |
 | target.slack.sources | list | `[]` |  |
 | target.slack.skipExistingOnStartup | bool | `true` |  |
-| target.slack.customField | object | `{}` |  |
+| target.slack.customFields | object | `{}` |  |
 | target.slack.filter | object | `{}` |  |
 | target.slack.channels | list | `[]` |  |
 | target.discord.webhook | string | `""` |  |
@@ -180,6 +181,7 @@ helm install policy-reporter chart/
 | target.webhook.minimumPriority | string | `""` |  |
 | target.webhook.sources | list | `[]` |  |
 | target.webhook.skipExistingOnStartup | bool | `true` |  |
+| target.webhook.customFields | object | `{}` |  |
 | target.webhook.filter | object | `{}` |  |
 | target.webhook.channels | list | `[]` |  |
 | target.s3.accessKeyID | string | `""` |  |
@@ -192,6 +194,7 @@ helm install policy-reporter chart/
 | target.s3.minimumPriority | string | `""` |  |
 | target.s3.sources | list | `[]` |  |
 | target.s3.skipExistingOnStartup | bool | `true` |  |
+| target.s3.customFields | object | `{}` |  |
 | target.s3.filter | object | `{}` |  |
 | target.s3.channels | list | `[]` |  |
 | target.kinesis.accessKeyID | string | `""` |  |
@@ -203,6 +206,7 @@ helm install policy-reporter chart/
 | target.kinesis.minimumPriority | string | `""` |  |
 | target.kinesis.sources | list | `[]` |  |
 | target.kinesis.skipExistingOnStartup | bool | `true` |  |
+| target.kinesis.customFields | object | `{}` |  |
 | target.kinesis.filter | object | `{}` |  |
 | target.kinesis.channels | list | `[]` |  |
 | leaderElection.enabled | bool | `false` |  |

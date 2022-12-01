@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.13.1-bb.0] - 2022-11-17
+
+### Changed
+
+- Updated chart to 2.13.4 upstream version, updated reporter images to 2.10.3 (reporter).  Updated ui to 2.6.5
+
 ## [2.13.1-bb.0] - 2022-10-20
 
 ### Changed
