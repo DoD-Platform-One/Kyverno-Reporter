@@ -4,6 +4,11 @@ plugins:
 # Key/value pairs that are attached to all resources.
 annotations: {}
 
+istio:
+  enabled: true
+  mtls:
+    mode: STRICT
+
 serviceMonitor:
   # HonorLabels chooses the metrics labels on collisions with target labels
   honorLabels: false
@@ -15,6 +20,12 @@ serviceMonitor:
   relabelings: []
   # see serviceMonitor.relabelings
   metricRelabelings: []
+  scheme:
+  tlsConfig: {}
+    # caFile: /etc/prom-certs/root-cert.pem
+    # certFile: /etc/prom-certs/cert-chain.pem
+    # keyFile: /etc/prom-certs/key.pem
+    # insecureSkipVerify: true
 
 kyverno:
   serviceMonitor:
@@ -24,6 +35,12 @@ kyverno:
     relabelings: []
     # see serviceMonitor.relabelings
     metricRelabelings: []
+    scheme:
+    tlsConfig: {}
+      # caFile: /etc/prom-certs/root-cert.pem
+      # certFile: /etc/prom-certs/cert-chain.pem
+      # keyFile: /etc/prom-certs/key.pem
+      # insecureSkipVerify: true
 
 grafana:
   # namespace for configMap of grafana dashboards
