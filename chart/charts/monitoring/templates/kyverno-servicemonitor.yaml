@@ -19,6 +19,13 @@ spec:
         {{- include "kyvernoplugin.selectorLabels" . | nindent 8 }}
   endpoints:
   - port: rest
+    {{- if .Values.serviceMonitor.scheme }}
+    scheme: {{ .Values.serviceMonitor.scheme }}
+    {{- end }}
+    {{- if .Values.serviceMonitor.tlsConfig }}
+    tlsConfig:
+      {{- toYaml .Values.serviceMonitor.tlsConfig | nindent 8 }}
+    {{- end }}
     honorLabels: {{ .Values.kyverno.serviceMonitor.honorLabels }}
     relabelings:
     - action: labeldrop

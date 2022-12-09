@@ -2,6 +2,13 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.13.4-bb.1] - 2022-12-06
+### Changed
+
+- Enabled mTLS for Kyverno Reporter metrics
+- updated gluon to  0.3.1
+
+
 ## [2.13.4-bb.0] - 2022-11-17
 
 ### Changed
