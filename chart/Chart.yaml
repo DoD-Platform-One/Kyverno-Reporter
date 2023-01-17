@@ -32,3 +32,6 @@ dependencies:
 annotations:
   bigbang.dev/applicationVersions: |
     - Kyverno Reporter: 2.10.4
+  helm.sh/images: |
+    - name: policy-reporter
+      image: registry1.dso.mil/ironbank/nirmata/policy-reporter/policy-reporter:2.10.4
