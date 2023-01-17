@@ -1,6 +1,6 @@
 # policy-reporter
 
-![Version: 2.13.5-bb.0](https://img.shields.io/badge/Version-2.13.5--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.10.4](https://img.shields.io/badge/AppVersion-2.10.4-informational?style=flat-square)
+![Version: 2.13.5-bb.1](https://img.shields.io/badge/Version-2.13.5--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.10.4](https://img.shields.io/badge/AppVersion-2.10.4-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -190,6 +190,7 @@ helm install policy-reporter chart/
 | target.s3.region | string | `""` |  |
 | target.s3.endpoint | string | `""` |  |
 | target.s3.bucket | string | `""` |  |
+| target.s3.pathStyle | bool | `false` |  |
 | target.s3.prefix | string | `""` |  |
 | target.s3.minimumPriority | string | `""` |  |
 | target.s3.sources | list | `[]` |  |
