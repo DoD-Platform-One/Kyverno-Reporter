@@ -1,8 +1,11 @@
+# Override the chart name used for all resources
+nameOverride: ""
+
 image:
   registry: registry1.dso.mil
   repository: ironbank/nirmata/policy-reporter/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.10.4
+  tag: 2.12.0
 
 imagePullSecrets: []
 
@@ -250,7 +253,7 @@ target:
     skipExistingOnStartup: true
     # Added as additional labels to each Loki event
     customLabels: {}
-    # Filter Results which should send to this target by namespaces, priorities or policies
+    # Filter Results which should send to this target by report labels, namespaces, priorities or policies
     # Wildcars for namespaces and policies are supported, you can either define exclude or include values
     # Filters are available for all targets except the UI
     filter: {}
@@ -258,6 +261,8 @@ target:
 #        include: ["develop"]
 #      priorities:
 #        exclude: ["debug", "info", "error"]
+#      labels:
+#        include: ["app", "owner:team-a", "monitoring:*"]
     channels: []
 #    - host: "http://loki.loki-stack:3100"
 #      sources: []
@@ -267,6 +272,8 @@ target:
 #          include: ["develop"]
 #        priorities:
 #          exclude: ["debug", "info", "error"]
+#        reportLabels:
+# .         include: ["app", "owner:team-b"]
 
   elasticsearch:
     # elasticsearch host address
@@ -325,6 +332,8 @@ target:
 #          exclude: ["debug", "info", "error"]
 #        policies:
 #          include: ["require-run-as-nonroot"]
+#        reportLabels:
+# .         include: ["app", "owner:team-b"]
 #    - webhook: "https://slack.webhook2"
 #      minimumPriority: "warning"
 #      filter:
@@ -502,6 +511,9 @@ tolerations: []
 
 # Anti-affinity to disallow deploying client and master nodes on the same worker node
 affinity: {}
+
+# Topology Spread Constraints to better spread pods
+topologySpreadConstraints: []
 
 # livenessProbe for policy-reporter
 livenessProbe:

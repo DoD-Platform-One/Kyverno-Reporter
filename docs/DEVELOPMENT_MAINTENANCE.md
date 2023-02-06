@@ -1,4 +1,4 @@
-# How to upgrade the Istio Operator Package chart
+# How to upgrade the Kyverno Policy Reporter Package chart
 1. Checkout the branch that renovate created. This branch will have the image tag updates and typically some other necessary version changes that you will want. You can either work off of this branch or branch off of it.
 1. Find the latest upstream chart version that corresponds to the new image version. Typically check the `appVersion` [here](https://github.com/kyverno/policy-reporter/blob/main/charts/policy-reporter/Chart.yaml) and find the newest tag where this matches the image tag. Git tags are in the format `policy-reporter-x.y.z`.
 1. Update the chart via `kpt`, using the version you just found. You should be able to run `kpt pkg update chart@<version> --strategy force-delete-replace` (ex: `kpt pkg update chart@policy-reporter-2.11.0 --strategy force-delete-replace`). NOTE: You can use a different strategy here which may save time, but force-delete-replace is the safest to ensure we get all upstream changes.

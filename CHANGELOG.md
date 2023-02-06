@@ -2,7 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [2.13.5-bb.1] - 2022-01-17
+## [2.6.2-bb.0] - 2023-02-01
+### Changed
+
+- Update application to 2.10.4 and chart to 2.12.0
+
+## [2.13.5-bb.1] - 2023-01-17
 ### Changed
 - Update gluon to new registry1 location + latest version (0.3.2)
 
