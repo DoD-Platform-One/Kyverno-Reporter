@@ -28,6 +28,7 @@ This is a high level list of all changes from the upstream chart. Ensure that th
 - Add `-bb.0` (or applicable bb version) to the version
 - Add gluon library as a dependency (and run `helm dependency update chart`)
 - Add the Big Bang version annotation to support release engineering automation
+- Modified chart name to `kyverno-reporter` for name standardization
 
 ## chart/charts/kyvernoPlugin/values.yaml
 - Update to point to the Ironbank image for `policy-reporter-kyverno-plugin`
