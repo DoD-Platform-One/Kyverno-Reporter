@@ -2,12 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
-## [2.6.2-bb.1] - 2023-02-01
+## [2.16.2-bb.1] - 2023-02-01
 ### Changed
 
 - Update chart name to match bb values file
 
-## [2.6.2-bb.0] - 2023-02-01
+## [2.16.2-bb.0] - 2023-02-01
 ### Changed
 
 - Update application to 2.10.4 and chart to 2.12.0
