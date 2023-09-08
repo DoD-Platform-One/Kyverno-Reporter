@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.16.0-bb.2] - 2023-08-30
+### Changed
+- Updated Prometheus Cypress Test to work with updated UI
+- Added Grafana as a dependency to Cypress Test
+
 ## [2.16.0-bb.1] - 2023-03-15
 ### Changed
 
