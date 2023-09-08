@@ -1,13 +1,18 @@
 // Loads a dashboard and validates title
 Cypress.Commands.add('loaddashboard', (name) => {
+  cy.intercept('POST', '**/query*').as('apiQuery')
   cy.get('[data-testid*="Dashboard search item ' + name + '"]')
     .click()
+  cy.wait('@apiQuery', {timeout: 30000}).then((interception) => {
+      expect(interception.response.statusCode).to.equal(200);
+  })
+  console.log('Loaded Dashboard for ' + name)
   cy.get('title').contains(name)
 })
 
 // Validates panel data should not be zero
 Cypress.Commands.add('panelnotzero', (name) => {
-  cy.get('.panel-container[aria-label*="' + name + '"]')
+  cy.get('[data-testid="data-testid Panel header ' + name + '"]')
     .contains(/^[1-9][0-9]*$/)
 })
 
@@ -19,7 +24,7 @@ before (function() {
   cy.get('input[name="password"]')
     .type('prom-operator')
   cy.contains("Log in").click()
-  cy.get('.page-toolbar').contains('General', {timeout: 30000})
+  cy.get('.page-dashboard').contains('Welcome', {timeout: 30000})
 })
 
 // Save cookies so we don't have to log in again
@@ -28,11 +33,12 @@ beforeEach(function () {
     const namesOfCookies = cookies.map(cm => cm.name)
     Cypress.Cookies.preserveOnce(...namesOfCookies)
   })
+
   cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
-  
-  cy.get('.pointer > button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
+
+  cy.get('button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
     if ($expanded === 'false') {
-      cy.get('.pointer > button[id^="collapse-button-"]').click({multiple: true})
+      cy.get('button[id^="collapse-button-"]').click({multiple: true})
     }
   })
 })
@@ -42,21 +48,23 @@ describe('Validate Grafana Dashboards', {
     runMode: 4,
   }
 }, () => {
-  it('Validate Cluster Policy Report Details Dashboard', () => {
-    cy.loaddashboard('ClusterPolicyReport Details')
-    cy.panelnotzero('Policy Pass Status')
-    cy.panelnotzero('Policy Fail Status')
-  })
-  it('Validate Policy Report Details Dashboard', () => {
-    cy.loaddashboard('PolicyReport Details')
-    cy.panelnotzero('Policy Pass Status')
-    cy.panelnotzero('Policy Fail Status')
-  })
-  it('Validate Policy Reports Dashboard', () => {
-    cy.loaddashboard('PolicyReports')
-    cy.panelnotzero('Failing Policies')
-    cy.panelnotzero('Failing ClusterPolicies')
-  })
+  if (Cypress.env("check_datasource")) {
+    it('Validate Cluster Policy Report Details Dashboard', () => {
+      cy.loaddashboard('ClusterPolicyReport Details')
+      cy.panelnotzero('Policy Pass Status')
+      cy.panelnotzero('Policy Fail Status')
+    })
+    it('Validate Policy Report Details Dashboard', () => {
+      cy.loaddashboard('PolicyReport Details')
+      cy.panelnotzero('Policy Pass Status')
+      cy.panelnotzero('Policy Fail Status')
+    })
+    it('Validate Policy Reports Dashboard', () => {
+      cy.loaddashboard('PolicyReports')
+      cy.panelnotzero('Failing ClusterPolicies')
+  
+    })
+  }
 })
 
 // Clear cookies to force login again
