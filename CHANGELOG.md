@@ -2,6 +2,10 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.16.0-bb.3] - 2023-9-14
+### Changed
+- Made test resources conditional on bbtests.enabled
+
 ## [2.16.0-bb.2] - 2023-08-30
 ### Changed
 - Updated Prometheus Cypress Test to work with updated UI
