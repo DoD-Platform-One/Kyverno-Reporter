@@ -1,3 +1,4 @@
+{{- if dig "bbtests" "enabled" false (merge .Values dict) }}
 apiVersion: kyverno.io/v1
 kind: ClusterPolicy
 metadata:
@@ -47,3 +48,4 @@ spec:
       message: "This was a test"
       pattern:
         kind: ClusterRole
+{{- end }}
