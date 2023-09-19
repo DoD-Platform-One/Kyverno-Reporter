@@ -1,6 +1,10 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [2.16.0-bb.4] - 2023-9-19
+### Changed
+- Upgraded gluon to 0.4.1
+- Upgraded cypress tests to work with cypress 13.x
 
 ## [2.16.0-bb.3] - 2023-9-14
 ### Changed

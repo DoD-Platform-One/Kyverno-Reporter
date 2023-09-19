@@ -29,11 +29,6 @@ before (function() {
 
 // Save cookies so we don't have to log in again
 beforeEach(function () {
-  cy.getCookies().then(cookies => {
-    const namesOfCookies = cookies.map(cm => cm.name)
-    Cypress.Cookies.preserveOnce(...namesOfCookies)
-  })
-
   cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
 
   cy.get('button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
@@ -68,6 +63,6 @@ describe('Validate Grafana Dashboards', {
 })
 
 // Clear cookies to force login again
-after(function () {
-  cy.clearCookies()
+after(() => {
+  Cypress.session.clearCurrentSessionData
 })
