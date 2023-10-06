@@ -1,6 +1,10 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [2.16.0-bb.5] - 2023-10-5
+### Changed
+- Exposed automountServiceAccountToken as a value
+
 ## [2.16.0-bb.4] - 2023-9-19
 ### Changed
 - Upgraded gluon to 0.4.1
