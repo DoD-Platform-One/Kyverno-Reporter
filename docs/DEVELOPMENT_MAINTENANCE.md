@@ -37,7 +37,7 @@ This is a high level list of all changes from the upstream chart. Ensure that th
 - Update to point to the Ironbank image for `policy-reporter`
 - Addition of values for `networkPolicies`, `openshift`, `istio`, and `bbtests`
 - Addition of `securityContext.runAsGroup` set to `1234`
-- Addition of value `serviceAccount.automountServiceAccountToken`
+- Addition of value `serviceAccount.automountServiceAccountToken`, set to `false` (but is overridden at the Pod spec level to maintain access to K8s API)
 
 # Testing new Kyverno Reporter version
 
