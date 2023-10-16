@@ -1,6 +1,6 @@
 # kyverno-reporter
 
-![Version: 2.16.0-bb.5](https://img.shields.io/badge/Version-2.16.0--bb.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square)
+![Version: 2.16.0-bb.6](https://img.shields.io/badge/Version-2.16.0--bb.6-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.12.0](https://img.shields.io/badge/AppVersion-2.12.0-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -51,7 +51,7 @@ helm install kyverno-reporter chart/
 | serviceAccount.create | bool | `true` |  |
 | serviceAccount.annotations | object | `{}` |  |
 | serviceAccount.name | string | `""` |  |
-| serviceAccount.automountServiceAccountToken | bool | `true` |  |
+| serviceAccount.automountServiceAccountToken | bool | `false` |  |
 | service.enabled | bool | `true` |  |
 | service.annotations | object | `{}` |  |
 | service.labels | object | `{}` |  |
