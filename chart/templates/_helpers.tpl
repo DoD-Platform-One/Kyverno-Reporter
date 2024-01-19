@@ -36,7 +36,7 @@ app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
 {{- end }}
 app.kubernetes.io/component: reporting
 app.kubernetes.io/managed-by: {{ .Release.Service }}
-app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
+app.kubernetes.io/part-of: policy-reporter
 {{- with .Values.global.labels }}
 {{ toYaml . }}
 {{- end -}}
@@ -48,14 +48,14 @@ Pod labels
 {{- define "policyreporter.podLabels" -}}
 helm.sh/chart: {{ include "policyreporter.chart" . }}
 app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
-app.kubernetes.io/part-of: {{ include "policyreporter.name" . }}
+app.kubernetes.io/part-of: policy-reporter
 {{- end }}
 
 {{/*
 Selector labels
 */}}
 {{- define "policyreporter.selectorLabels" -}}
-app.kubernetes.io/name: {{ include "policyreporter.name" . }}
+app.kubernetes.io/name: policy-reporter
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end }}
 
@@ -111,5 +111,14 @@ maxUnavailable: {{ .Values.podDisruptionBudget.maxUnavailable }}
     {{- .Values.global.namespace -}}
 {{- else -}}
     {{- .Release.Namespace -}}
+{{- end -}}
+{{- end -}}
+
+{{/* Get the namespace name. */}}
+{{- define "policyreporter.logLevel" -}}
+{{- if .Values.api.logging -}}
+-1
+{{- else -}}
+{{- .Values.logging.logLevel -}}
 {{- end -}}
 {{- end -}}
