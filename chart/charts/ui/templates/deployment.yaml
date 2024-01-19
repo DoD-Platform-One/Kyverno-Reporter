@@ -5,8 +5,13 @@ metadata:
   namespace: {{ include "ui.namespace" . }}
   labels:
     {{- include "ui.labels" . | nindent 4 }}
+  {{- if .Values.annotations }}
+  annotations:
+    {{- toYaml .Values.annotations | nindent 4 }}
+  {{- end }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  revisionHistoryLimit: {{ .Values.revisionHistoryLimit }}
   {{- if .Values.deploymentStrategy }}
   strategy:
     {{- toYaml .Values.deploymentStrategy | nindent 4 }}
@@ -31,6 +36,9 @@ spec:
           {{- toYaml . | nindent 8 }}
         {{- end }}
     spec:
+      {{- with .Values.priorityClassName }}
+      priorityClassName: {{ . }}
+      {{- end }}
       {{- with .Values.imagePullSecrets }}
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
@@ -67,12 +75,26 @@ spec:
             mountPath: /app/config.yaml
             subPath: config.yaml
             readOnly: true
+          {{- if .Values.volumes }}
+            {{- toYaml .Values.volumeMounts | nindent 10 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          {{- with .Values.envVars }}
+          {{- . | toYaml | trim | nindent 10 }}
+          {{- end }}
       volumes:
       - name: config-file
         configMap:
           name: {{ include "ui.fullname" . }}-config
+      {{- if .Values.volumes }}
+        {{- toYaml .Values.volumes | nindent 6 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

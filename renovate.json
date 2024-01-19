@@ -19,10 +19,10 @@
             "fileMatch": ["^chart/Chart\\.yaml$"],
             "matchStrings": [
                 "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)",
-                "- Kyverno Reporter::\\s+(?<currentValue>.+)"
+                "- Kyverno Reporter:\\s+(?<currentValue>.+)"
             ],
             "extractVersionTemplate": "^v(?<version>.*)$",
-            "depNameTemplate": "registry1.dso.mil/ironbank/nirmata/policy-reporter/policy-reporter",
+            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter",
             "datasourceTemplate": "docker"
         },
         {

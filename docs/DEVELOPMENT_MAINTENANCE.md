@@ -1,7 +1,7 @@
 # How to upgrade the Kyverno Policy Reporter Package chart
 1. Checkout the branch that renovate created. This branch will have the image tag updates and typically some other necessary version changes that you will want. You can either work off of this branch or branch off of it.
 1. Find the latest upstream chart version that corresponds to the new image version. Typically check the `appVersion` [here](https://github.com/kyverno/policy-reporter/blob/main/charts/policy-reporter/Chart.yaml) and find the newest tag where this matches the image tag. Git tags are in the format `policy-reporter-x.y.z`.
-1. Update the chart via `kpt`, using the version you just found. You should be able to run `kpt pkg update chart@<version> --strategy force-delete-replace` (ex: `kpt pkg update chart@policy-reporter-2.11.0 --strategy force-delete-replace`). NOTE: You can use a different strategy here which may save time, but force-delete-replace is the safest to ensure we get all upstream changes.
+1. Update the chart via `kpt`, using the version you just found. You should be able to run `kpt pkg update chart@<version> --strategy alpha-git-patch` (ex: `kpt pkg update chart@policy-reporter-2.11.0 --strategy alpha-git-patch`). NOTE: If you feel confident that all BB changes are captured, you can run `--strategy force-delete-replace` since it is the safest to ensure we get all upstream changes.
 1. Follow the section below for [modifications from upstream](#modifications-from-upstream) to restore all of the Big Bang specific changes.
 1. Validate versioning for `Chart.yaml` (this generally should be complete between renovate + restoring the modifications). `appVersion` should equal the new image version, `version` should be the upstream version with `-bb.0` appended.
 1. Add a changelog entry for the new chart version. At minimum mention the new upstream chart version and new image version(s).
@@ -38,6 +38,21 @@ This is a high level list of all changes from the upstream chart. Ensure that th
 - Addition of values for `networkPolicies`, `openshift`, `istio`, and `bbtests`
 - Addition of `securityContext.runAsGroup` set to `1234`
 - Addition of value `serviceAccount.automountServiceAccountToken`, set to `false` (but is overridden at the Pod spec level to maintain access to K8s API)
+
+## chart/charts/monitoring/values.yaml
+- Added `scheme` and `tlsConfig` to both `kyverno.serviceMonitor` and `serviceMonitor` fields
+
+## chart/charts/monitoring/templates/kyverno-servicemonitor.yaml
+- Added template fields to insert values added in `monitoring/values.yaml`
+```
+{{- if .Values.serviceMonitor.scheme }}
+scheme: {{ .Values.serviceMonitor.scheme }}
+{{- end }}
+{{- if .Values.serviceMonitor.tlsConfig }}
+tlsConfig:
+    {{- toYaml .Values.serviceMonitor.tlsConfig | nindent 8 }}
+{{- end }}
+```
 
 # Testing new Kyverno Reporter version
 

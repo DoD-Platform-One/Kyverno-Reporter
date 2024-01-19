@@ -1,6 +1,12 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [2.16.0-bb.6] - 2024-01-16
+### Changed
+- Updated upstream chart reference from `2.16.0` to `2.21.6`
+- Updated image and IronBank repo reference from `registry1.dso.mil/ironbank/nirmata/policy-reporter/policy-reporter:2.12.0` to `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.17.5`
+- Updated `gluon` package dependency version from `0.4.1` to `0.4.7`
+
 ## [2.16.0-bb.6] - 2023-10-11
 ### Changed
 - Harden API token automounting behavior of ServiceAccount/Pod
