@@ -1,6 +1,11 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+
+## [2.21.6-bb.1] - 2024-01-25
+### Changed
+- Changed cypress tests to work with version of Grafana
+
 ## [2.16.0-bb.6] - 2024-01-16
 ### Changed
 - Updated upstream chart reference from `2.16.0` to `2.21.6`
