@@ -1,8 +1,8 @@
 // Loads a dashboard and validates title
 Cypress.Commands.add('loaddashboard', (name) => {
   cy.intercept('POST', '**/query*').as('apiQuery')
-  cy.get('[data-testid*="Dashboard search item ' + name + '"]')
-    .click()
+  cy.get('input[placeholder="Search for dashboards and folders"]').type(name)
+  cy.get('a[title="' + name + '"]').click()
   cy.wait('@apiQuery', {timeout: 30000}).then((interception) => {
       expect(interception.response.statusCode).to.equal(200);
   })
@@ -30,12 +30,6 @@ before (function() {
 // Save cookies so we don't have to log in again
 beforeEach(function () {
   cy.visit(`${Cypress.env('grafana_url')}/dashboards`)
-
-  cy.get('button[id^="collapse-button-"]').invoke('attr', 'aria-expanded').then(($expanded) => {
-    if ($expanded === 'false') {
-      cy.get('button[id^="collapse-button-"]').click({multiple: true})
-    }
-  })
 })
 
 describe('Validate Grafana Dashboards', {
