@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.21.6-bb.2] - 2024-02-02
+### Changed
+- Updated to Gluon 0.4.7
+- Removed cypress config as it is now coming from gluon
+- Updated cypress tests to use new shared commands from gluon
+
 ## [2.21.6-bb.1] - 2024-01-25
 ### Changed
 - Changed cypress tests to work with version of Grafana

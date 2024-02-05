@@ -7,5 +7,6 @@ describe('Prometheus Targets', {
 }, () => {
     it('Validate metrics are scraped', () => {
       cy.visit(`${Cypress.env('prometheus_url')}/targets`)
+      cy.validatePromTarget(Cypress.env('reporter_ns'), "(1/1 up)")
     })
 })
