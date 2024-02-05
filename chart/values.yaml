@@ -770,5 +770,7 @@ bbtests:
     envs:
       cypress_grafana_url: http://grafana.monitoring.svc.cluster.local
       cypress_prometheus_url: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+      cypress_grafana_user: "admin"
+      cypress_grafana_pass: "prom-operator"
       cypress_reporter_ns: kyverno-reporter
   volumes: []
