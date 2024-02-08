@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.22.0-bb.0] - 2024-02-06
+### Changed
+- Updated upstream chart reference from `2.21.6` to `2.22.0`
+- Updated image from to `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.17.5` to `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.18.0`
+
 ## [2.21.6-bb.2] - 2024-02-02
 ### Changed
 - Updated to Gluon 0.4.7
