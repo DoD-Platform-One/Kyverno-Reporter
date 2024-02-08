@@ -1,6 +1,6 @@
 # kyverno-reporter
 
-![Version: 2.21.6-bb.2](https://img.shields.io/badge/Version-2.21.6--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.17.5](https://img.shields.io/badge/AppVersion-2.17.5-informational?style=flat-square)
+![Version: 2.22.0-bb.0](https://img.shields.io/badge/Version-2.22.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.0](https://img.shields.io/badge/AppVersion-2.18.0-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -40,7 +40,7 @@ helm install kyverno-reporter chart/
 | image.registry | string | `"registry1.dso.mil"` |  |
 | image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.17.5"` |  |
+| image.tag | string | `"2.18.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | priorityClassName | string | `""` |  |
 | replicaCount | int | `1` |  |
@@ -127,6 +127,8 @@ helm install kyverno-reporter chart/
 | emailReports.smtp.password | string | `""` |  |
 | emailReports.smtp.from | string | `""` |  |
 | emailReports.smtp.encryption | string | `""` |  |
+| emailReports.smtp.skipTLS | bool | `false` |  |
+| emailReports.smtp.certificate | string | `""` |  |
 | emailReports.summary.enabled | bool | `false` |  |
 | emailReports.summary.schedule | string | `"0 8 * * *"` |  |
 | emailReports.summary.activeDeadlineSeconds | int | `300` |  |
@@ -159,6 +161,8 @@ helm install kyverno-reporter chart/
 | target.loki.sources | list | `[]` |  |
 | target.loki.skipExistingOnStartup | bool | `true` |  |
 | target.loki.customLabels | object | `{}` |  |
+| target.loki.username | string | `""` |  |
+| target.loki.password | string | `""` |  |
 | target.loki.filter | object | `{}` |  |
 | target.loki.channels | list | `[]` |  |
 | target.elasticsearch.host | string | `""` |  |
@@ -288,6 +292,7 @@ helm install kyverno-reporter chart/
 | target.securityHub.region | string | `""` |  |
 | target.securityHub.endpoint | string | `""` |  |
 | target.securityHub.accountID | string | `""` |  |
+| target.securityHub.productName | string | `""` |  |
 | target.securityHub.minimumPriority | string | `""` |  |
 | target.securityHub.sources | list | `[]` |  |
 | target.securityHub.skipExistingOnStartup | bool | `true` |  |
