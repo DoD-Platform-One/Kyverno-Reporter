@@ -4,7 +4,7 @@
     "dependencyDashboard": true,
     "dependencyDashboardTitle": "Renovate: Upgrade Kyverno Reporter Images",
     "draftPR": true,
-    "enabledManagers": ["helm-values","regex"],
+    "enabledManagers": ["helmv3","regex"],
     "ignorePaths": ["chart/charts/**"],
     "labels": ["kyverno","renovate"],
     "commitMessagePrefix": "SKIP UPDATE CHECK",
