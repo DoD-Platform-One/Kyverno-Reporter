@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.22.0-bb.2] - 2024-03-08
+### Changed
+- Adding Sidecar to deny egress that is external to istio services
+- Adding customServiceEntries to allow egress to override sidecar restraint 
+
 ## [2.22.0-bb.1] - 2024-03-06
 ### Changed
 - Updated image from `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.18.0` to `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.18.1`
