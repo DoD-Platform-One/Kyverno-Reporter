@@ -5,7 +5,7 @@ metadata:
 upstream:
   type: git
   git:
-    commit: 7607a987ab31cb406953baf4a3ff7f7ec80995f8
+    commit: 53e91cffee5b8e2d0410ce71fa31efee113584ad
     repo: https://github.com/kyverno/policy-reporter
     directory: /charts/policy-reporter
-    ref: policy-reporter-2.22.0
+    ref: policy-reporter-2.22.4
