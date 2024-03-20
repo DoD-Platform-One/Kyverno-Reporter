@@ -53,6 +53,41 @@ tlsConfig:
     {{- toYaml .Values.serviceMonitor.tlsConfig | nindent 8 }}
 {{- end }}
 ```
+# Deploy kyvernoReporter as part of Big Bang
+
+- Create a k8s dev environment. One option is to use the Big Bang k3d-dev.sh with no arguments which will give you the default configuration. The following steps assume you are using the script.
+- Follow the instructions at the end of the script to connect to the k8s cluster and install flux.
+- Deploy kyvernoReporter with these dev values overrides. Core apps are disabled for quick deployment.
+```
+kyvernoReporter:
+  enabled: true
+  sourceType: "git"
+  git:
+    repo: https://repo1.dso.mil/big-bang/product/packages/kyverno-reporter.git
+    path: chart
+    tag: null
+    branch: "replace-me-with-your-branch-name"
+```
+- A more robust option is to deploy Big Bang with Istio, Monitoring, Kyverno, and KyvernoPolicies enabled such as:
+```
+istioOperator:
+  enabled: true
+istio:
+  enabled: true
+kyverno:
+  enabled: true
+kyvernoPolicies:
+  enabled: true
+kyvernoReporter:
+  enabled: true
+  git:
+    repo: https://repo1.dso.mil/big-bang/product/packages/kyverno-reporter.git
+    path: chart
+    tag: null
+    branch: "replace-me-with-your-branch-name"
+monitoring:
+  enabled: true
+```
 
 # Testing new Kyverno Reporter version
 
