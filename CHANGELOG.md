@@ -1,13 +1,13 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
-## [2.24.0-bb.1] - 2024-03-27
+## [2.22.4-bb.1] - 2024-03-27
 ### Changed
 - Changed 01-prometheus.cy.js to wait before the test handle early network errors on cypress tests
 
-## [2.24.0-bb.0] - 2024-03-12
+## [2.22.4-bb.0] - 2024-03-12
 ### Changed
-- Updated upstream chart reference from `2.22.0` to `2.24.0`
+- Updated upstream chart reference from `2.22.0` to `2.22.4`
 
 ## [2.22.0-bb.2] - 2024-03-08
 ### Changed
