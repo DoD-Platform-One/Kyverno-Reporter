@@ -1,7 +1,7 @@
 {
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
-  "serialNumber": "urn:uuid:5e4a5338-cebc-4b10-81fa-1d28d256bd59",
+  "serialNumber": "urn:uuid:a6adf155-6075-4be0-a562-c16e4f246d01",
   "version": 1,
   "metadata": {
     "tools": null,
@@ -3436,11 +3436,11 @@
         },
         {
           "type": "library",
-          "bom-ref": "registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter@2.18.1:pkg:golang/github.com/patrickmn/go-cache@v2.1.0\u002Bincompatible?package-id=223c5ecda911b63a",
+          "bom-ref": "registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter@2.18.1:pkg:golang/github.com/patrickmn/go-cache@v2.1.0%2Bincompatible?package-id=223c5ecda911b63a",
           "name": "github.com/patrickmn/go-cache",
           "version": "v2.1.0\u002Bincompatible",
           "cpe": "cpe:2.3:a:patrickmn:go-cache:v2.1.0\\\u002Bincompatible:*:*:*:*:*:*:*",
-          "purl": "pkg:golang/github.com/patrickmn/go-cache@v2.1.0\u002Bincompatible",
+          "purl": "pkg:golang/github.com/patrickmn/go-cache@v2.1.0%2Bincompatible",
           "properties": [
             {
               "name": "syft:package:foundBy",
