@@ -1,6 +1,6 @@
 # kyverno-reporter
 
-![Version: 2.22.4-bb.1](https://img.shields.io/badge/Version-2.22.4--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.1](https://img.shields.io/badge/AppVersion-2.18.1-informational?style=flat-square)
+![Version: 2.22.4-bb.2](https://img.shields.io/badge/Version-2.22.4--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.1](https://img.shields.io/badge/AppVersion-2.18.1-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -334,6 +334,7 @@ helm install kyverno-reporter chart/
 | tmpVolume | object | `{}` |  |
 | networkPolicies.enabled | bool | `false` |  |
 | networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
+| networkPolicies.additionalPolicies | list | `[]` |  |
 | extraVolumes.volumeMounts | list | `[]` |  |
 | openshift | bool | `false` |  |
 | istio.enabled | bool | `false` |  |
