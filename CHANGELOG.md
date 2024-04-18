@@ -1,6 +1,11 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+---
+## [2.24.0-bb.3] - 2024-04-17
+### Changed
+- Updated to Gluon from `0.4.8` to `0.4.9`
+
 ## [2.24.0-bb.2] - 2024-04-05
 ### Added
 - Custom network policies 
