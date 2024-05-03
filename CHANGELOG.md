@@ -1,6 +1,10 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [2.22.4-bb.4] - 2024-04-30
+### Changed
+- Updated `gluon` package dependency version from `0.4.9` to `0.4.10`
+
 ## [2.22.4-bb.3] - 2024-04-22
 ### Changed
 - Updated `gluon` package dependency version from `0.4.8` to `0.4.9`
