@@ -1,6 +1,11 @@
 # Changelog
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
+## [2.23.1-bb.0] - 2024-05-24
+### Changed
+- Updated image from `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.18.1` to `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.19.0`
+- Updated upstream chart reference from `2.22.4` to `2.23.1`
+
 ## [2.22.4-bb.5] - 2024-05-12
 ### Changed
 - Updated `gluon` package dependency version from `0.4.10` to `0.5.0`
