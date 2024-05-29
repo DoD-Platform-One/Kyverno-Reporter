@@ -5,7 +5,7 @@ image:
   registry: registry1.dso.mil
   repository: ironbank/opensource/kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.18.1
+  tag: 2.19.0
 
 imagePullSecrets: []
 
@@ -166,6 +166,13 @@ reportFilter:
     # Disable the processing of ClusterPolicyReports
     disabled: false
 
+# customize source specific logic like result ID generation
+sourceConfig: {}
+# sourcename:
+#   customID:
+#     enabled: true
+#     fields: ["resource", "policy", "rule", "category", "result", "message"]
+
 # enable policy-report-ui
 ui:
   enabled: false
@@ -217,13 +224,6 @@ global:
     password: ""
     # read credentials from secret
     secretRef: ""
-
-# configure mappings from policy to priority
-# you can use default to configure a default priority for fail results
-# example mapping
-#   default: warning
-#   require-ns-labels: error
-policyPriorities: {}
 
 emailReports:
   clusterName: "" # (optional) - displayed in the email report if configured
@@ -331,6 +331,8 @@ target:
     skipExistingOnStartup: true
     # Added as additional labels to each Loki event
     customLabels: {}
+    # Additional custom HTTP Headers
+    headers: {}
     # HTTP BasicAuth credentials for Loki
     username: ""
     password: ""
@@ -662,6 +664,10 @@ target:
     sources: []
     # Skip already existing PolicyReportResults on startup
     skipExistingOnStartup: true
+    # Enable cleanup listener for SecurityHub
+    cleanup: false
+    # Delay between AWS GetFindings API calls, to avoid hitting the API RequestLimit
+    delayInSeconds: 2
     # Added as additional properties to each securityHub event
     customFields: {}
     # filter results send by namespaces, policies and priorities
@@ -736,13 +742,13 @@ topologySpreadConstraints: []
 # livenessProbe for policy-reporter
 livenessProbe:
   httpGet:
-    path: /ready
+    path: /healthz
     port: http
 
 # readinessProbe for policy-reporter
 readinessProbe:
   httpGet:
-    path: /healthz
+    path: /ready
     port: http
 
 # If set the volume for sqlite is freely configurable below "- name: sqlite". If no value is set an emptyDir is used.

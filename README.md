@@ -1,6 +1,6 @@
 # kyverno-reporter
 
-![Version: 2.22.4-bb.5](https://img.shields.io/badge/Version-2.22.4--bb.5-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.18.1](https://img.shields.io/badge/AppVersion-2.18.1-informational?style=flat-square)
+![Version: 2.23.1-bb.0](https://img.shields.io/badge/Version-2.23.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.19.0](https://img.shields.io/badge/AppVersion-2.19.0-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -40,7 +40,7 @@ helm install kyverno-reporter chart/
 | image.registry | string | `"registry1.dso.mil"` |  |
 | image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.18.1"` |  |
+| image.tag | string | `"2.19.0"` |  |
 | imagePullSecrets | list | `[]` |  |
 | priorityClassName | string | `""` |  |
 | replicaCount | int | `1` |  |
@@ -97,6 +97,7 @@ helm install kyverno-reporter chart/
 | reportFilter.namespaces.include | list | `[]` |  |
 | reportFilter.namespaces.exclude | list | `[]` |  |
 | reportFilter.clusterReports.disabled | bool | `false` |  |
+| sourceConfig | object | `{}` |  |
 | ui.enabled | bool | `false` |  |
 | kyvernoPlugin.enabled | bool | `false` |  |
 | monitoring.enabled | bool | `false` |  |
@@ -117,7 +118,6 @@ helm install kyverno-reporter chart/
 | global.basicAuth.username | string | `""` |  |
 | global.basicAuth.password | string | `""` |  |
 | global.basicAuth.secretRef | string | `""` |  |
-| policyPriorities | object | `{}` |  |
 | emailReports.clusterName | string | `""` |  |
 | emailReports.titlePrefix | string | `"Report"` |  |
 | emailReports.smtp.secret | string | `""` |  |
@@ -161,6 +161,7 @@ helm install kyverno-reporter chart/
 | target.loki.sources | list | `[]` |  |
 | target.loki.skipExistingOnStartup | bool | `true` |  |
 | target.loki.customLabels | object | `{}` |  |
+| target.loki.headers | object | `{}` |  |
 | target.loki.username | string | `""` |  |
 | target.loki.password | string | `""` |  |
 | target.loki.filter | object | `{}` |  |
@@ -296,6 +297,8 @@ helm install kyverno-reporter chart/
 | target.securityHub.minimumPriority | string | `""` |  |
 | target.securityHub.sources | list | `[]` |  |
 | target.securityHub.skipExistingOnStartup | bool | `true` |  |
+| target.securityHub.cleanup | bool | `false` |  |
+| target.securityHub.delayInSeconds | int | `2` |  |
 | target.securityHub.customFields | object | `{}` |  |
 | target.securityHub.filter | object | `{}` |  |
 | target.securityHub.channels | list | `[]` |  |
@@ -326,9 +329,9 @@ helm install kyverno-reporter chart/
 | tolerations | list | `[]` |  |
 | affinity | object | `{}` |  |
 | topologySpreadConstraints | list | `[]` |  |
-| livenessProbe.httpGet.path | string | `"/ready"` |  |
+| livenessProbe.httpGet.path | string | `"/healthz"` |  |
 | livenessProbe.httpGet.port | string | `"http"` |  |
-| readinessProbe.httpGet.path | string | `"/healthz"` |  |
+| readinessProbe.httpGet.path | string | `"/ready"` |  |
 | readinessProbe.httpGet.port | string | `"http"` |  |
 | sqliteVolume | object | `{}` |  |
 | tmpVolume | object | `{}` |  |
