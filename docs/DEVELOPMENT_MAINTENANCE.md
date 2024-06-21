@@ -93,7 +93,7 @@ monitoring:
 
 Pipeline tests will validate all basic functionality of monitoring components (servicemonitor healthy in prometheus + dashboards show in grafana with data).
 
-Since the pipeline does not install Istio and the package is currently not part of the umbrella chart, it is advised to deploy locally for some basic testing of Istio injection/mTLS. You can follow the below instructions to install it on top of an umbrella deployment.
+Since the pipeline does not install Istio and the package is currently not part of the umbrella chart, it is advised to deploy locally for some basic testing of Istio injection/mTLS. You can follow the below instructions to install it on top of an umbrella deployment. Follow the steps below for manual testing. For automated CI testing follow the steps in [integration_testing](integration_testing.md) .
 
 1. Deploy the Big Bang chart with Istio, Kyverno, Kyverno Policies, and Monitoring enabled.
 1. Create a new namespace to deploy Kyverno Reporter into with `kubectl create ns kyverno-reporter`.
@@ -104,3 +104,23 @@ Since the pipeline does not install Istio and the package is currently not part 
 1. Navigate to Grafana and search for [polcy dashboards](https://grafana.bigbang.dev/?orgId=1&search=open&query=policy). Validate that 3 dashboards appear in the search and data is loaded in each. It can be helpful to deploy an additional package at this point to cause some additional policy violations/reports.
 1. Perform any additional testing (of specific new features, specific connections, etc) as needed.
 1. Uninstall as needed with `helm uninstall kyverno-reporter -n kyverno-reporter` or test changes iteratively by re-running the above `helm upgrade` command.
+1. [test-package-against-bb](https://repo1.dso.mil/big-bang/bigbang/-/blob/master/docs/developer/test-package-against-bb.md?ref_type=heads) and modify test-values with the following settings:
+    ```yaml
+    istioOperator:
+    enabled: true
+    istio:
+    enabled: true
+    kyverno:
+    enabled: true
+    kyvernoPolicies:
+    enabled: true
+    kyvernoReporter:
+    enabled: true
+    git:
+        repo: https://repo1.dso.mil/big-bang/product/packages/kyverno-reporter.git
+        path: chart
+        tag: null
+        branch: "replace-me-with-your-branch-name"
+    monitoring:
+    enabled: true
+    ```
