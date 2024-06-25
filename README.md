@@ -6,11 +6,13 @@ Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
 
 ## Upstream References
+
 * <https://kyverno.github.io/policy-reporter>
 
 * <https://github.com/kyverno/policy-reporter>
 
 ## Learn More
+
 * [Application Overview](docs/overview.md)
 * [Other Documentation](docs/)
 
@@ -22,12 +24,13 @@ It creates Prometheus Metrics and can send rule validation events to different t
 
 Install Helm
 
-https://helm.sh/docs/intro/install/
+<https://helm.sh/docs/intro/install/>
 
 ## Deployment
 
 * Clone down the repository
 * cd into directory
+
 ```bash
 helm install kyverno-reporter chart/
 ```
