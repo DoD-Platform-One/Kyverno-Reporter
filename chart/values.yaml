@@ -5,7 +5,7 @@ image:
   registry: registry1.dso.mil
   repository: ironbank/opensource/kyverno/policy-reporter
   pullPolicy: IfNotPresent
-  tag: 2.19.0
+  tag: 2.20.0
 
 imagePullSecrets: []
 
@@ -173,7 +173,7 @@ sourceConfig: {}
 #     enabled: true
 #     fields: ["resource", "policy", "rule", "category", "result", "message"]
 
-# enable policy-report-ui
+# Settings for the Policy Reporter UI subchart (see subchart's values.yaml)
 ui:
   enabled: false
 

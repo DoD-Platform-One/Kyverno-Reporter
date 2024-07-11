@@ -2,6 +2,11 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.24.0-bb.0] - 2024-07-02
+### Changed
+- Updated image from `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.19.0` to `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.20.0`
+- Updated upstream chart reference from `2.23.1` to `2.24.0`
+
 ## [2.23.1-bb.1] - 2024-06-21
 
 ### Changed
