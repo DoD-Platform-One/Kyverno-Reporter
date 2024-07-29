@@ -16,6 +16,24 @@ This is a high level list of all changes from the upstream chart. Ensure that th
 - This folder contains networkpolicies and peerauthentication resources
 - Can be restored after a kpt update with `git restore chart/templates/bigbang`
 
+## chart/templates/cronjob-summary-report.yaml
+- Added call to `bigbang.labels` helper function under `spec.template.metadata.labels`
+    ```
+    {{- include "bigbang.labels" . | nindent 8 }}
+    ```
+
+## chart/templates/cronjob-violations-report.yaml
+- Added call to `bigbang.labels` helper function under `spec.template.metadata.labels`
+    ```
+    {{- include "bigbang.labels" . | nindent 8 }}
+    ```
+
+## chart/templates/deployment.yaml
+- Added call to `bigbang.labels` helper function under `spec.template.metadata.labels`
+    ```
+    {{- include "bigbang.labels" . | nindent 8 }}
+    ```
+
 ## chart/tests/cypress
 - This folder contains cypress tests for CI testing of the reporter
 - Can be restored after a kpt update with `git restore chart/tests/cypress`
