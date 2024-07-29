@@ -30,6 +30,7 @@ spec:
             {{- with .Values.global.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
+            {{- include "bigbang.labels" . | nindent 12 }}
           annotations:
             checksum/secret: {{ include (print .Template.BasePath "/config-email-reports-secret.yaml") . | sha256sum | quote }}
             {{- with .Values.annotations }}

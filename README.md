@@ -1,7 +1,7 @@
+<!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 2.24.0-bb.0](https://img.shields.io/badge/Version-2.24.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.20.0](https://img.shields.io/badge/AppVersion-2.20.0-informational?style=flat-square)
-
+![Version: 2.24.0-bb.1](https://img.shields.io/badge/Version-2.24.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.20.0](https://img.shields.io/badge/AppVersion-2.20.0-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -11,6 +11,11 @@ It creates Prometheus Metrics and can send rule validation events to different t
 * <https://kyverno.github.io/policy-reporter>
 
 * <https://github.com/kyverno/policy-reporter>
+
+### Upstream Release Notes
+
+* [Find our upstream chart's CHANGELOG here](https://link-goes-here/CHANGELOG.md)
+* [and our upstream application release notes here](https://another-link-here/RELEASE_NOTES.md)
 
 ## Learn More
 
@@ -361,3 +366,7 @@ helm install kyverno-reporter chart/
 ## Contributing
 
 Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in contributing.
+
+---
+
+_This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
