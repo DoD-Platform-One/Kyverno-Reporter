@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 2.24.0-bb.1](https://img.shields.io/badge/Version-2.24.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.20.0](https://img.shields.io/badge/AppVersion-2.20.0-informational?style=flat-square)
+![Version: 2.24.0-bb.2](https://img.shields.io/badge/Version-2.24.0--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.20.1](https://img.shields.io/badge/AppVersion-2.20.1-informational?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -49,7 +49,7 @@ helm install kyverno-reporter chart/
 | image.registry | string | `"registry1.dso.mil"` |  |
 | image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
 | image.pullPolicy | string | `"IfNotPresent"` |  |
-| image.tag | string | `"2.20.0"` |  |
+| image.tag | string | `"2.20.1"` |  |
 | imagePullSecrets | list | `[]` |  |
 | priorityClassName | string | `""` |  |
 | replicaCount | int | `1` |  |
