@@ -1,7 +1,7 @@
 
 describe('Prometheus Targets', {
   retries: {
-    runMode: 24,
+    runMode: 5,
   }
 }, () => {
     it('Validate metrics are scraped', () => {
