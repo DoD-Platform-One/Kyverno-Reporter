@@ -2,6 +2,12 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.24.1-bb.0] - 2024-08-19
+
+### Changed
+
+- Updated upstream chart reference from `2.24.0` to `2.24.1`
+
 ## [2.24.0-bb.3] - 2024-08-19
 
 ### Changed
