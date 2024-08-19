@@ -2,6 +2,13 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+## [2.24.0-bb.3] - 2024-08-19
+
+### Changed
+
+- Updated `gluon` package dependency version from `0.5.2` to `0.5.3`
+- Reduced number of Cypress test retries
+
 ## [2.24.0-bb.2] - 2024-08-05
 
 ### Changed
