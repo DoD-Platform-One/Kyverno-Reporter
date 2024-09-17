@@ -25,12 +25,11 @@ spec:
             {{- include "policyreporter.selectorLabels" . | nindent 12 }}
             {{- include "policyreporter.podLabels" . | nindent 12 }}
             {{- with .Values.podLabels }}
-              {{- toYaml . | nindent 12 }}
+              {{- tpl (toYaml . | nindent 12) $ }}
             {{- end }}
             {{- with .Values.global.labels }}
               {{- toYaml . | nindent 12 }}
             {{- end }}
-            {{- include "bigbang.labels" . | nindent 12 }}
           annotations:
             checksum/secret: {{ include (print .Template.BasePath "/config-email-reports-secret.yaml") . | sha256sum | quote }}
             {{- with .Values.annotations }}

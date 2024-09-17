@@ -2,6 +2,14 @@
 
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
+---
+
+## [2.24.1-bb.1] - 2024-08-26
+
+### Changed
+
+- Reverted previous Kiali label changes related to the epic and modified them to follow the new pattern.
+
 ## [2.24.1-bb.0] - 2024-08-19
 
 ### Changed
