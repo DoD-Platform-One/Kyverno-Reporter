@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [2.24.2-bb.1] - 2024-10-04
+
+### Changed
+
+- Removed duplicate entry
+
 ## [2.24.2-bb.0] - 2024-10-02
 
 ### Changed
@@ -11,12 +17,6 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 - Updated upstream chart reference from `2.24.1` ---> `2.24.2`
 - Updated image from `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.20.1` ----> `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.20.2`
 - Updated `gluon` package dependency version from `0.5.3` ---> `0.5.4`
-
-## [2.24.1-bb.1] - 2024-08-26
-
-### Changed
-
-- Reverted previous Kiali label changes related to the epic and modified them to follow the new pattern.
 
 ## [2.24.1-bb.1] - 2024-08-26
 
