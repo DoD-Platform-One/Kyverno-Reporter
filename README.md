@@ -1,41 +1,40 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 2.24.2-bb.1](https://img.shields.io/badge/Version-2.24.2--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.20.2](https://img.shields.io/badge/AppVersion-2.20.2-informational?style=flat-square)
+![Version: 2.24.2-bb.1](https://img.shields.io/badge/Version-2.24.2--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 2.20.2](https://img.shields.io/badge/AppVersion-2.20.2-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
 
 ## Upstream References
-
-* <https://kyverno.github.io/policy-reporter>
+- <https://kyverno.github.io/policy-reporter>
 
 * <https://github.com/kyverno/policy-reporter>
 
-### Upstream Release Notes
+## Upstream Release Notes
 
-* [Find our upstream chart's CHANGELOG here](https://github.com/kyverno/policy-reporter/blob/main/CHANGELOG.md)
-* [and our upstream application release notes here](https://github.com/kyverno/kyverno/releases)
+- [Find our upstream chart's CHANGELOG here](https://github.com/kyverno/policy-reporter/blob/main/CHANGELOG.md)
+- [and our upstream application release notes here](https://github.com/kyverno/kyverno/releases)
 
 ## Learn More
 
-* [Application Overview](docs/overview.md)
-* [Other Documentation](docs/)
+- [Application Overview](docs/overview.md)
+- [Other Documentation](docs/)
 
 ## Pre-Requisites
 
-* Kubernetes Cluster deployed
-* Kubernetes config installed in `~/.kube/config`
-* Helm installed
+- Kubernetes Cluster deployed
+- Kubernetes config installed in `~/.kube/config`
+- Helm installed
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
-* Clone down the repository
-* cd into directory
+- Clone down the repository
+- cd into directory
 
 ```bash
 helm install kyverno-reporter chart/
@@ -370,3 +369,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+

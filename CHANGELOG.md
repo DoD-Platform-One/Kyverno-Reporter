@@ -9,6 +9,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 ### Changed
 
 - Removed duplicate entry
+- Added the maintenance track annotation and badge
 
 ## [2.24.2-bb.0] - 2024-10-02
 
