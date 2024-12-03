@@ -26,6 +26,7 @@ dependencies:
     version: 0.5.4
     repository: oci://registry1.dso.mil/bigbang
 annotations:
+  bigbang.dev/maintenanceTrack: bb_integrated
   bigbang.dev/applicationVersions: |
     - Kyverno Reporter: 2.20.2
   helm.sh/images: |
