@@ -4,6 +4,20 @@ nameOverride: ""
 plugins:
   kyverno: false
 
+monitoring:
+  serviceMonitor:
+    enabled: false
+    namespace: ""
+    scheme: http
+    tlsConfig: {}
+    honorLabels: false
+    scrapeTimeout: ""
+    interval: ""
+    labels: {}
+    namespaceSelector: {}
+    relabelings: []
+    metricRelabelings: []
+
 # Key/value pairs that are attached to all resources.
 annotations: {}
 

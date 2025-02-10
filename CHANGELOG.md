@@ -4,6 +4,14 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.0.1-bb.0] - 2025-02-10
+
+### Changed
+
+- Updated upstream chart reference from `2.24.2` ---> `3.0.1`
+- Updated image from `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:2.20.2` ----> `registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter:3.0.0`
+- Updated `gluon` package dependency version from `0.5.4` ---> `0.5.14`
+
 ## [2.24.2-bb.2] - 2025-01-09
 
 ### Changed
