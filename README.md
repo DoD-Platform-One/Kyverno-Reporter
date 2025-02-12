@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.0.1-bb.0](https://img.shields.io/badge/Version-3.0.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.0.1-bb.1](https://img.shields.io/badge/Version-3.0.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -29,7 +29,7 @@ It creates Prometheus Metrics and can send rule validation events to different t
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
@@ -184,7 +184,7 @@ helm install kyverno-reporter chart/
 | target.elasticsearch.headers | object | `{}` | Additional HTTP Headers |
 | target.elasticsearch.index | string | `"policy-reporter"` | Elasticsearch index (default: policy-reporter) |
 | target.elasticsearch.rotation | string | `"daily"` | Elasticsearch index rotation and index suffix Possible values: daily, monthly, annually, none (default: daily) |
-| target.elasticsearch.typelessApi | bool | `false` | Enables Elasticsearch typless API <https://www.elastic.co/blog/moving-from-types-to-typeless-apis-in-elasticsearch-7-0> keeping as false for retrocompatibility. |
+| target.elasticsearch.typelessApi | bool | `false` | Enables Elasticsearch typless API https://www.elastic.co/blog/moving-from-types-to-typeless-apis-in-elasticsearch-7-0 keeping as false for retrocompatibility. |
 | target.elasticsearch.username | string | `""` | HTTP BasicAuth username |
 | target.elasticsearch.password | string | `""` | HTTP BasicAuth password |
 | target.elasticsearch.apiKey | string | `""` | Elasticsearch API Key for api key authentication |
@@ -347,8 +347,8 @@ helm install kyverno-reporter chart/
 | database.mountedSecret | string | `""` |  |
 | podDisruptionBudget.minAvailable | int | `1` | Configures the minimum available pods for policy-reporter disruptions. Cannot be used if `maxUnavailable` is set. |
 | podDisruptionBudget.maxUnavailable | string | `nil` | Configures the maximum unavailable pods for policy-reporter disruptions. Cannot be used if `minAvailable` is set. |
-| nodeSelector | object | `{}` | Node labels for pod assignment ref: <https://kubernetes.io/docs/user-guide/node-selection/> |
-| tolerations | list | `[]` | Tolerations for pod assignment ref: <https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/> |
+| nodeSelector | object | `{}` | Node labels for pod assignment ref: https://kubernetes.io/docs/user-guide/node-selection/ |
+| tolerations | list | `[]` | Tolerations for pod assignment ref: https://kubernetes.io/docs/concepts/configuration/taint-and-toleration/ |
 | affinity | object | `{}` | Anti-affinity to disallow deploying client and master nodes on the same worker node |
 | topologySpreadConstraints | list | `[]` | Topology Spread Constraints to better spread pods |
 | livenessProbe | object | `{"httpGet":{"path":"/ready","port":"http"}}` | Deployment livenessProbe for policy-reporter |
@@ -382,3 +382,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+

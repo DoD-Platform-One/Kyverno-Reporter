@@ -3,6 +3,11 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
+## [3.0.1-bb.1] - 2025-02-11
+
+### Updated
+
+- Added support for istio Operatorless network policy values
 
 ## [3.0.1-bb.0] - 2025-02-10
 
