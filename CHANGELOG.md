@@ -3,6 +3,13 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
+
+## [3.0.1-bb.2] - 2025-02-18
+
+### Updated
+
+- Updated Big Bang NPs to use a common selector label to match all pods
+
 ## [3.0.1-bb.1] - 2025-02-11
 
 ### Updated

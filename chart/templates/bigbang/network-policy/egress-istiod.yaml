@@ -8,7 +8,7 @@ metadata:
 spec:
   podSelector:
     matchLabels:
-      {{- include "policyreporter.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/part-of: policy-reporter
   policyTypes:
   - Egress
   egress:
