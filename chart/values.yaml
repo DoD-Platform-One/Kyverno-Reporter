@@ -15,7 +15,7 @@ plugin:
       create: false
       automount: false
       annotations: {}
-      
+
   kyverno:
     enabled: false
     serviceAccount:
@@ -656,7 +656,7 @@ target:
     serverSideEncryption: ""
     # -- S3 Storage, force path style configuration
     pathStyle: false
-    # -- Used prefix, keys will have format: s3://<bucket>/<prefix>/YYYY-MM-DD/YYYY-MM-DDTHH:mm:ss.s+01:00.json
+    # -- Used prefix, keys will have format: s3://$bucket/$prefix/YYYY-MM-DD/YYYY-MM-DDTHH:mm:ss.s+01:00.json
     prefix: ""
     # -- Read configuration from an already existing Secret
     secretRef: ""
@@ -895,7 +895,7 @@ istio:
       #       - number: 443
       #         protocol: TLS
       #         name: https
-      #     resolution: DNS 
+      #     resolution: DNS
 
 bbtests:
   enabled: false
@@ -907,4 +907,9 @@ bbtests:
       cypress_grafana_user: "admin"
       cypress_grafana_pass: "prom-operator"
       cypress_reporter_ns: kyverno-reporter
+  scripts:
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.6
+    envs:
+      KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
+
   volumes: []
