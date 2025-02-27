@@ -3,6 +3,11 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
+## [3.0.1-bb.3] - 2025-02-20
+
+### Updated
+
+- Change cypress E2E tests for prometheus to CLI driven tests
 
 ## [3.0.1-bb.2] - 2025-02-18
 
