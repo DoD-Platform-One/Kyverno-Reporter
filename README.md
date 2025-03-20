@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.0.1-bb.3](https://img.shields.io/badge/Version-3.0.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.0.1-bb.4](https://img.shields.io/badge/Version-3.0.1--bb.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.0](https://img.shields.io/badge/AppVersion-3.0.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -57,7 +57,7 @@ helm install kyverno-reporter chart/
 | plugin.kyverno.serviceAccount.annotations | object | `{}` |  |
 | monitoring.serviceMonitor.enabled | bool | `false` |  |
 | monitoring.serviceMonitor.namespace | string | `""` |  |
-| monitoring.serviceMonitor.scheme | string | `"http"` |  |
+| monitoring.serviceMonitor.scheme | string | `"https"` |  |
 | monitoring.serviceMonitor.tlsConfig | object | `{}` |  |
 | monitoring.serviceMonitor.honorLabels | bool | `false` |  |
 | monitoring.serviceMonitor.scrapeTimeout | string | `""` |  |
@@ -373,7 +373,7 @@ helm install kyverno-reporter chart/
 | bbtests.cypress.envs.cypress_grafana_user | string | `"admin"` |  |
 | bbtests.cypress.envs.cypress_grafana_pass | string | `"prom-operator"` |  |
 | bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/big-bang/base:2.1.0"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.6"` |  |
 | bbtests.scripts.envs.KYVERNO_REPORTER_URL | string | `"http://policy-reporter.kyverno-reporter.svc:8080"` |  |
 | bbtests.volumes | list | `[]` |  |
 
