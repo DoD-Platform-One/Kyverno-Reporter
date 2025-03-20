@@ -8,6 +8,7 @@ fullnameOverride: "policy-reporter"
 namespaceOverride: ""
 
 # Add plugin configuration for Trivy
+# plugin contains configuration for various plugins
 plugin:
   trivy:
     enabled: false
@@ -23,11 +24,13 @@ plugin:
       automount: false
       annotations: {}
 
+# monitoring contains configurations related to monitoring
 monitoring:
+  enabled: false
   serviceMonitor:
     enabled: false
     namespace: ""
-    scheme: http
+    scheme: "https"
     tlsConfig: {}
     honorLabels: false
     scrapeTimeout: ""
@@ -37,6 +40,19 @@ monitoring:
     relabelings: []
     metricRelabelings: []
 
+  kyverno:
+    serviceMonitor:
+      enabled: false
+      namespace: ""
+      scheme: "https"
+      tlsConfig: {}
+      honorLabels: false
+      scrapeTimeout: ""
+      interval: ""
+      labels: {}
+      namespaceSelector: {}
+      relabelings: []
+      metricRelabelings: []
 ui:
   enabled: false
 

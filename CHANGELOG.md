@@ -3,6 +3,13 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
+
+## [3.0.1-bb.4] - 2025-03-19
+
+### Updated
+
+- Change Prometheus Service Entry Not Configured For Certs And TLS
+
 ## [3.0.1-bb.3] - 2025-02-20
 
 ### Updated

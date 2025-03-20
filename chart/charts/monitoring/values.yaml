@@ -5,18 +5,30 @@ plugins:
   kyverno: false
 
 monitoring:
+  # -- Enables the Prometheus Operator integration
+  enabled: false
+
+  # -- Key/value pairs that are attached to all resources.
+  annotations: {}
+
   serviceMonitor:
-    enabled: false
-    namespace: ""
-    scheme: http
-    tlsConfig: {}
+    # -- HonorLabels chooses the metrics labels on collisions with target labels
     honorLabels: false
-    scrapeTimeout: ""
-    interval: ""
+    # -- Allow to override the namespace for serviceMonitor
+    namespace:
+    # -- Labels to match the serviceMonitorSelector of the Prometheus Resource
     labels: {}
-    namespaceSelector: {}
+    # -- ServiceMonitor Relabelings
+    # https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#relabelconfig
     relabelings: []
+    # -- See serviceMonitor.relabelings
     metricRelabelings: []
+    # -- (optional) NamespaceSelector
+    namespaceSelector: {}
+    # -- (optional) ScrapeTimeout
+    scrapeTimeout:
+    # -- (optional) Scrape interval
+    interval:
 
 # Key/value pairs that are attached to all resources.
 annotations: {}
@@ -27,6 +39,7 @@ istio:
     mode: STRICT
 
 serviceMonitor:
+  enabled: true
   # HonorLabels chooses the metrics labels on collisions with target labels
   honorLabels: false
   # allow to override the namespace for serviceMonitor
@@ -45,12 +58,12 @@ serviceMonitor:
   interval:
   
   # ** Big Bang addition: Enable mTLS for kyverno reporter metrics **
-  scheme:
+  scheme: https
   tlsConfig: {}
-    # caFile: /etc/prom-certs/root-cert.pem
-    # certFile: /etc/prom-certs/cert-chain.pem
-    # keyFile: /etc/prom-certs/key.pem
-    # insecureSkipVerify: true
+     #caFile: /etc/prom-certs/root-cert.pem
+     #certFile: /etc/prom-certs/cert-chain.pem
+     #keyFile: /etc/prom-certs/key.pem
+     #insecureSkipVerify: true
 
 kyverno:
   serviceMonitor:
