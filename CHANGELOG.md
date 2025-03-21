@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.0.3-bb.0] (2025-03-21)
+
+### Updated
+
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.30.6 -> v1.30.11
+- registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter 3.0.0 -> 3.0.3
+
 ## [3.0.1-bb.4] - 2025-03-19
 
 ### Updated
