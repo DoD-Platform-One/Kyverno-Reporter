@@ -61,7 +61,7 @@ image:
   repository: ironbank/opensource/kyverno/policy-reporter
   pullPolicy: IfNotPresent
   # -- (string) Image tag
-  tag: 3.0.0
+  tag: 3.0.3
 
 # -- Image pullSecrets
 imagePullSecrets: []
@@ -890,7 +890,6 @@ networkPolicies:
 
 extraVolumes:
   volumeMounts: []
-
 openshift: false
 
 istio:
@@ -924,7 +923,7 @@ bbtests:
       cypress_grafana_pass: "prom-operator"
       cypress_reporter_ns: kyverno-reporter
   scripts:
-    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.6
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.11
     envs:
       KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
 
