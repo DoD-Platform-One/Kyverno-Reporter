@@ -1,8 +1,8 @@
 image:
   registry: registry1.dso.mil
-  repository: ironbank/nirmata/policy-reporter/policy-reporter-kyverno-plugin
+  repository: ironbank/opensource/kyverno/policy-reporter-kyverno-plugin
   pullPolicy: IfNotPresent
-  tag: 1.5.2
+  tag: 1.6.4
 
 imagePullSecrets: []
 

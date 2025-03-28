@@ -4,7 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
-## [3.0.3-bb.0] (2025-03-21)
+## [3.0.3-bb.1] - 2025-03-28
+
+### Changed
+
+- Updated Kyverno Reporter Plugin subchart 1.5.2 -> 1.6.4
+
+## [3.0.3-bb.0] - 2025-03-21
 
 ### Updated
 
