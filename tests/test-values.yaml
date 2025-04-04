@@ -1,21 +1,39 @@
-imagePullSecrets:
-- name: private-registry
-kyvernoPlugin:
-  imagePullSecrets:
-  - name: private-registry
-ui:
-  imagePullSecrets:
-  - name: private-registry
-
-bbtests:
-  enabled: true
-
-
-networkPolicies:
-  enabled: true
-  controlPlaneCidr: 172.16.0.0/12
-
+#########################
+# Disable Core Packages #
+#########################
+neuvector:
+  enabled: false
+loki:
+  enabled: false
+promtail:
+  enabled: false
+tempo:
+  enabled: false
+kiali:
+  enabled: false
+addons:
+  minioOperator:
+    enabled: false
+########################
+# Required for package #
+########################
 monitoring:
   enabled: true
-  grafana:
-    namespace: monitoring
+  values:
+    bbtests:
+      enabled: false
+grafana:
+  enabled: true
+  values:
+    bbtests:
+      enabled: false
+kyvernoReporter:
+  enabled: true
+kyverno:
+  values:
+    bbtests:
+      enabled: false
+kyvernoPolicies:
+  values:
+    bbtests:
+      enabled: false
