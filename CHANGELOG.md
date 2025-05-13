@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.0.3-bb.2] - 2025-05-01
+
+### Changed
+
+- Refactored to pass-through pattern
+
 ## [3.0.3-bb.1] - 2025-03-28
 
 ### Changed

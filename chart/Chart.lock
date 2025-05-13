@@ -1,15 +1,9 @@
 dependencies:
-- name: monitoring
-  repository: ""
-  version: 2.8.2
-- name: ui
-  repository: ""
-  version: 2.10.5
-- name: kyvernoPlugin
-  repository: ""
-  version: 1.6.4
+- name: policy-reporter
+  repository: https://kyverno.github.io/policy-reporter
+  version: 3.0.3
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.5.14
-digest: sha256:7409f79e92ce387700dd0f64608130ae81aa11c901909d07fcf4f70f14f58056
-generated: "2025-02-18T17:28:44.13367-05:00"
+digest: sha256:721cb26ad2dfb2cebb660b17069e899f34bc5474bd91a3dd330869d7c192f3dd
+generated: "2025-05-01T21:06:45.483482352-04:00"
