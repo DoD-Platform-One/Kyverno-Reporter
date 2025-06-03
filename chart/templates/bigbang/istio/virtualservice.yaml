@@ -1,0 +1,27 @@
+{{- if and .Values.istio.enabled .Values.istio.KyvernoReporter.VirtualService.enabled -}}
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: {{ include "ui.name" . }}
+  namespace: {{ .Release.Namespace }}
+  labels:
+    helm.sh/chart: {{ include "ui.chart" . }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/managed-by: {{ .Release.Service }}
+    app.kubernetes.io/part-of: kyverno-reporter
+spec:
+  gateways:
+  {{- range .Values.istio.KyvernoReporter.gateways }}
+    - {{ . }}
+  {{- end }}
+  hosts:
+  {{- range .Values.istio.KyvernoReporter.hosts }}
+    - {{ tpl . $}}
+  {{- end }}
+  http:
+    - route:
+        - destination:
+            port:
+              number: 8080
+            host: {{ include "ui.name" . }}.{{ .Release.Namespace }}.svc.cluster.local
+{{- end }}

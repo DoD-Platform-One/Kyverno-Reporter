@@ -2,17 +2,14 @@
 domain: dev.bigbang.mil
 
 global:
+  fullnameOverride: kyverno-reporter
   labels: {}
 
-policy-reporter:
-  # -- Override the chart name used for all resources
-  nameOverride: ""
+upstream:
 
-  # -- Overwrite the fullname of all resources
+  nameOverride: "kyverno-reporter"
   fullnameOverride: "policy-reporter"
-
-  # -- Overwrite the namespace of all resources
-  namespaceOverride: ""
+  namespaceOverride: "kyverno-reporter"
 
   imagePullSecrets: 
     - name: private-registry
@@ -56,12 +53,23 @@ policy-reporter:
     enabled: true
     grafana:
       dashboards:
-        # -- Enable the deployment of grafana dashboards
         enabled: true
+        namespace: monitoring
+    serviceMonitor:
+      scheme: https
+      tlsConfig:
+        caFile: /etc/prom-certs/root-cert.pem
+        certFile: /etc/prom-certs/cert-chain.pem
+        keyFile: /etc/prom-certs/key.pem
+        insecureSkipVerify: true  # Prometheus does not support Istio security naming, thus skip verifying target pod certificate
+
 
 # Big Bang additions
 networkPolicies:
   enabled: false
+  ingressLabels:
+    app: istio-ingressgateway
+    istio: ingressgateway
   controlPlaneCidr: 0.0.0.0/0
   additionalPolicies: []
 
@@ -70,12 +78,26 @@ extraVolumes:
 openshift: false
 
 istio:
-  enabled: false
+  enabled: true
   mtls:
     mode: STRICT
   hardened:
-    enabled: false
+    enabled: true
     outboundTrafficPolicyMode: "REGISTRY_ONLY"
+    customAuthorizationPolicies:
+    - name: "allow-kyverno-reporter"
+      enabled: true
+      spec:
+        selector:
+          matchLabels:
+            app.kubernetes.io/instance: kyverno-reporter-kyverno-reporter
+        action: ALLOW
+        rules:
+        - from:
+          - source:
+              namespaces:
+              - "kyverno-reporter"
+
     customServiceEntries: []
       # - name: "allow-google"
       #   enabled: true
@@ -89,14 +111,18 @@ istio:
       #         name: https
       #     resolution: DNS
     annotations: {}
+  KyvernoReporter:
+    enabled: true
+    VirtualService:
+      enabled: false
     # -- Labels for VS
     labels: {}
     # -- Gateways for VS
     gateways:
-      - istio-system/main
+      - istio-system/public
     # -- Hosts for VS
     hosts:
-      - policy-reporter.{{ .Values.domain }}
+      - policyreporter.{{ .Values.domain }}
 bbtests:
   enabled: false
   cypress:

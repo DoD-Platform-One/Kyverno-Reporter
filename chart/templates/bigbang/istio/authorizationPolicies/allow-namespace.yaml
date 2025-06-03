@@ -1,0 +1,15 @@
+{{- if and .Values.istio.enabled .Values.istio.hardened.enabled -}}
+apiVersion: security.istio.io/v1
+kind: AuthorizationPolicy
+metadata:
+ name: allow-all-in-namespace
+ namespace: {{ .Release.Namespace }}
+spec:
+  action: ALLOW
+  rules:
+  - from:
+    - source:
+        namespaces: [{{ .Release.Namespace | quote }}]
+        principals: ["*"]  # Allows all principals within the namespace
+{{- end }}
+

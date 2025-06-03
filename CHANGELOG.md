@@ -4,12 +4,11 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
-## [3.0.3-bb.2] - 2025-05-15
+## [3.0.3-bb.3] - 2025-05-31
 
 ### Changed
 
-- updated renovate.json
-
+- Added authorization policy for istio hardened
 
 ## [3.0.3-bb.2] - 2025-05-01
 
