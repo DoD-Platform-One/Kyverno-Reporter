@@ -18,7 +18,7 @@ upstream:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kyverno/policy-reporter
     pullPolicy: IfNotPresent
-    tag: 3.0.3
+    tag: 3.1.1
     # -- Deployment priorityClassName
     priorityClassName: ""
 
@@ -28,7 +28,7 @@ upstream:
       registry: registry1.dso.mil
       repository: ironbank/nirmata/policy-reporter/policy-reporter-ui
       pullPolicy: IfNotPresent
-      tag: "2.3.7"
+      tag: "2.3.10"
     imagePullSecrets: 
       - name: private-registry
     podLabels:
@@ -41,7 +41,7 @@ upstream:
         registry: registry1.dso.mil
         repository: ironbank/opensource/kyverno/policy-reporter/kyverno-plugin
         pullPolicy: IfNotPresent
-        tag: "0.4.2"
+        tag: "0.4.4"
       imagePullSecrets:
         - name: private-registry
       podLabels:
@@ -134,7 +134,7 @@ bbtests:
       cypress_grafana_pass: "prom-operator"
       cypress_reporter_ns: kyverno-reporter
   scripts:
-    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.11
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5
     envs:
       KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
 

@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.0.3-bb.3](https://img.shields.io/badge/Version-3.0.3--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.0.3](https://img.shields.io/badge/AppVersion-3.0.3-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.1.1-bb.0](https://img.shields.io/badge/Version-3.1.1--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -45,39 +45,32 @@ helm install kyverno-reporter chart/
 | Key | Type | Default | Description |
 |-----|------|---------|-------------|
 | domain | string | `"dev.bigbang.mil"` | domain to use for virtual service |
-| global.fullnameOverride | string | `"kyverno-reporter"` |  |
 | global.labels | object | `{}` |  |
-| upstream.nameOverride | string | `"kyverno-reporter"` |  |
-| upstream.fullnameOverride | string | `"policy-reporter"` |  |
-| upstream.namespaceOverride | string | `"kyverno-reporter"` |  |
-| upstream.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.image.registry | string | `"registry1.dso.mil"` |  |
-| upstream.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
-| upstream.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.image.tag | string | `"3.0.3"` |  |
-| upstream.image.priorityClassName | string | `""` | Deployment priorityClassName |
-| upstream.ui.enabled | bool | `true` |  |
-| upstream.ui.image.registry | string | `"registry1.dso.mil"` |  |
-| upstream.ui.image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
-| upstream.ui.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.ui.image.tag | string | `"2.3.7"` |  |
-| upstream.ui.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.ui.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
-| upstream.plugin.kyverno.enabled | bool | `true` |  |
-| upstream.plugin.kyverno.image.registry | string | `"registry1.dso.mil"` |  |
-| upstream.plugin.kyverno.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter/kyverno-plugin"` |  |
-| upstream.plugin.kyverno.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.plugin.kyverno.image.tag | string | `"0.4.2"` |  |
-| upstream.plugin.kyverno.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.plugin.kyverno.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
-| upstream.monitoring.enabled | bool | `true` | Enables the Prometheus Operator integration |
-| upstream.monitoring.grafana.dashboards.enabled | bool | `true` |  |
-| upstream.monitoring.grafana.dashboards.namespace | string | `"monitoring"` |  |
-| upstream.monitoring.serviceMonitor.scheme | string | `"https"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.caFile | string | `"/etc/prom-certs/root-cert.pem"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.certFile | string | `"/etc/prom-certs/cert-chain.pem"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.keyFile | string | `"/etc/prom-certs/key.pem"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.insecureSkipVerify | bool | `true` |  |
+| policy-reporter.nameOverride | string | `""` | Override the chart name used for all resources |
+| policy-reporter.fullnameOverride | string | `"policy-reporter"` | Overwrite the fullname of all resources |
+| policy-reporter.namespaceOverride | string | `""` | Overwrite the namespace of all resources |
+| policy-reporter.imagePullSecrets[0].name | string | `"private-registry"` |  |
+| policy-reporter.image.registry | string | `"registry1.dso.mil"` |  |
+| policy-reporter.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
+| policy-reporter.image.pullPolicy | string | `"IfNotPresent"` |  |
+| policy-reporter.image.tag | string | `"3.1.1"` |  |
+| policy-reporter.image.priorityClassName | string | `""` | Deployment priorityClassName |
+| policy-reporter.ui.enabled | bool | `true` |  |
+| policy-reporter.ui.image.registry | string | `"registry1.dso.mil"` |  |
+| policy-reporter.ui.image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
+| policy-reporter.ui.image.pullPolicy | string | `"IfNotPresent"` |  |
+| policy-reporter.ui.image.tag | string | `"2.3.10"` |  |
+| policy-reporter.ui.imagePullSecrets[0].name | string | `"private-registry"` |  |
+| policy-reporter.ui.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
+| policy-reporter.plugin.kyverno.enabled | bool | `true` |  |
+| policy-reporter.plugin.kyverno.image.registry | string | `"registry1.dso.mil"` |  |
+| policy-reporter.plugin.kyverno.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter/kyverno-plugin"` |  |
+| policy-reporter.plugin.kyverno.image.pullPolicy | string | `"IfNotPresent"` |  |
+| policy-reporter.plugin.kyverno.image.tag | string | `"0.4.4"` |  |
+| policy-reporter.plugin.kyverno.imagePullSecrets[0].name | string | `"private-registry"` |  |
+| policy-reporter.plugin.kyverno.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
+| policy-reporter.monitoring.enabled | bool | `true` | Enables the Prometheus Operator integration |
+| policy-reporter.monitoring.grafana.dashboards.enabled | bool | `true` | Enable the deployment of grafana dashboards |
 | networkPolicies.enabled | bool | `false` |  |
 | networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
@@ -96,11 +89,9 @@ helm install kyverno-reporter chart/
 | istio.hardened.customAuthorizationPolicies[0].spec.rules[0].from[0].source.namespaces[0] | string | `"kyverno-reporter"` |  |
 | istio.hardened.customServiceEntries | list | `[]` |  |
 | istio.hardened.annotations | object | `{}` |  |
-| istio.KyvernoReporter.enabled | bool | `true` |  |
-| istio.KyvernoReporter.VirtualService.enabled | bool | `false` |  |
-| istio.KyvernoReporter.labels | object | `{}` | Labels for VS |
-| istio.KyvernoReporter.gateways | list | `["istio-system/public"]` | Gateways for VS |
-| istio.KyvernoReporter.hosts | list | `["policyreporter.{{ .Values.domain }}"]` | Hosts for VS |
+| istio.hardened.labels | object | `{}` | Labels for VS |
+| istio.hardened.gateways | list | `["istio-system/main"]` | Gateways for VS |
+| istio.hardened.hosts | list | `["policy-reporter.{{ .Values.domain }}"]` | Hosts for VS |
 | bbtests.enabled | bool | `false` |  |
 | bbtests.cypress.artifacts | bool | `true` |  |
 | bbtests.cypress.envs.cypress_grafana_url | string | `"http://grafana.monitoring.svc.cluster.local"` |  |
@@ -108,7 +99,7 @@ helm install kyverno-reporter chart/
 | bbtests.cypress.envs.cypress_grafana_user | string | `"admin"` |  |
 | bbtests.cypress.envs.cypress_grafana_pass | string | `"prom-operator"` |  |
 | bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.30.11"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5"` |  |
 | bbtests.scripts.envs.KYVERNO_REPORTER_URL | string | `"http://policy-reporter.kyverno-reporter.svc:8080"` |  |
 | bbtests.volumes | list | `[]` |  |
 
