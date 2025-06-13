@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.1.1-bb.1](https://img.shields.io/badge/Version-3.1.1--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.1.1-bb.2](https://img.shields.io/badge/Version-3.1.1--bb.2-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -79,8 +79,9 @@ helm install kyverno-reporter chart/
 | upstream.monitoring.serviceMonitor.tlsConfig.keyFile | string | `"/etc/prom-certs/key.pem"` |  |
 | upstream.monitoring.serviceMonitor.tlsConfig.insecureSkipVerify | bool | `true` |  |
 | networkPolicies.enabled | bool | `false` |  |
-| networkPolicies.ingressLabels.app | string | `"istio-ingressgateway"` |  |
+| networkPolicies.ingressLabels.app | string | `"public-ingressgateway"` |  |
 | networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
+| networkPolicies.istioNamespaceSelector."app.kubernetes.io/name" | string | `"istio-gateway"` |  |
 | networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
 | networkPolicies.additionalPolicies | list | `[]` |  |
 | extraVolumes.volumeMounts | list | `[]` |  |
@@ -97,7 +98,7 @@ helm install kyverno-reporter chart/
 | istio.hardened.customServiceEntries | list | `[]` |  |
 | istio.hardened.annotations | object | `{}` |  |
 | istio.kyvernoReporter.enabled | bool | `true` |  |
-| istio.kyvernoReporter.virtualService.enabled | bool | `false` |  |
+| istio.kyvernoReporter.virtualService.enabled | bool | `true` |  |
 | istio.kyvernoReporter.labels | object | `{}` | Labels for VS |
 | istio.kyvernoReporter.gateways | list | `["istio-system/public"]` | Gateways for VS |
 | istio.kyvernoReporter.hosts | list | `["policyreporter.{{ .Values.domain }}"]` | Hosts for VS |

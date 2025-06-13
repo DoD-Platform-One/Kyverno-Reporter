@@ -68,8 +68,11 @@ upstream:
 networkPolicies:
   enabled: false
   ingressLabels:
-    app: istio-ingressgateway
+    app: public-ingressgateway
     istio: ingressgateway
+  istioNamespaceSelector:
+    ingress: istio-gateway
+    egress: istio-gateway
   controlPlaneCidr: 0.0.0.0/0
   additionalPolicies: []
 
@@ -114,12 +117,12 @@ istio:
   kyvernoReporter:
     enabled: true
     virtualService:
-      enabled: false
+      enabled: true
     # -- Labels for VS
     labels: {}
     # -- Gateways for VS
     gateways:
-      - istio-system/public
+      - istio-gateway/public-ingressgateway
     # -- Hosts for VS
     hosts:
       - policyreporter.{{ .Values.domain }}
