@@ -111,9 +111,9 @@ istio:
       #         name: https
       #     resolution: DNS
     annotations: {}
-  KyvernoReporter:
+  kyvernoReporter:
     enabled: true
-    VirtualService:
+    virtualService:
       enabled: false
     # -- Labels for VS
     labels: {}

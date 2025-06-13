@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled .Values.istio.KyvernoReporter.VirtualService.enabled -}}
+{{- if and .Values.istio.enabled .Values.istio.kyvernoReporter.virtualService.enabled -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
@@ -11,11 +11,11 @@ metadata:
     app.kubernetes.io/part-of: kyverno-reporter
 spec:
   gateways:
-  {{- range .Values.istio.KyvernoReporter.gateways }}
+  {{- range .Values.istio.kyvernoReporter.gateways }}
     - {{ . }}
   {{- end }}
   hosts:
-  {{- range .Values.istio.KyvernoReporter.hosts }}
+  {{- range .Values.istio.kyvernoReporter.hosts }}
     - {{ tpl . $}}
   {{- end }}
   http:

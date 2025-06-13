@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.1.1-bb.1] (2025-06-13)
+
+### Changed
+
+- fix Istio VirtualService and AuthzPol
+
 ## [3.1.1-bb.0] (2025-06-04)
 
 ### Changed
