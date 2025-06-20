@@ -30,6 +30,19 @@
     "customManagers": [
         {
             "customType": "regex",
+            "description": "Update kyvernoReporter helm chart version",
+            "fileMatch": [
+                "^chart/Chart\\.yaml$"
+            ],
+            "matchStrings": [
+                "version:\\s+(?<currentValue>.+)-bb\\.\\d+"
+            ],
+            "depNameTemplate": "policy-reporter",
+            "datasourceTemplate": "helm",
+            "registryUrlTemplate": "https://kyverno.github.io/policy-reporter"
+        },
+        {
+            "customType": "regex",
             "fileMatch": [
                 "^chart/Chart\\.yaml$"
             ],
