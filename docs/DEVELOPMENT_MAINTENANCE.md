@@ -1,7 +1,9 @@
 # How to upgrade the Kyverno Policy Reporter Package chart
+Kyverno-Reporter within Big Bang is a passthrough chart that wraps the upstream policy-reporter helm chart. The below details the steps required to update to a new version of the kyverno-reporter package.
+
 1. Checkout the branch that renovate created. This branch will have the image tag updates and typically some other necessary version changes that you will want. You can either work off of this branch or branch off of it.
-1. Find the latest upstream chart version that corresponds to the new image version. Typically check the `appVersion` [here](https://github.com/kyverno/policy-reporter/blob/main/charts/policy-reporter/Chart.yaml) and find the newest tag where this matches the image tag. Git tags are in the format `policy-reporter-x.y.z`.
-1. Update the chart via `kpt`, using the version you just found. You should be able to run `kpt pkg update chart@<version> --strategy alpha-git-patch` (ex: `kpt pkg update chart@policy-reporter-2.11.0 --strategy alpha-git-patch`). NOTE: If you feel confident that all BB changes are captured, you can run `--strategy force-delete-replace` since it is the safest to ensure we get all upstream changes.
+1. Find the latest upstream chart version that corresponds to the new image version. Typically check the `appVersion` [here](https://github.com/kyverno/policy-reporter/blob/main/charts/policy-reporter/Chart.yaml) and find the newest chart version to match. Another place to check is [artifacthub](https://artifacthub.io/packages/helm/policy-reporter/policy-reporter)
+1. Update the policy-reporter dependency version in `chart/Chart.yaml` to match the upstream version found in step 2 if not already updated by renovate-runner. This can be done by executing: `helm dep up` in the chart directory.
 1. Follow the section below for [modifications from upstream](#modifications-from-upstream) to restore all of the Big Bang specific changes.
 1. Validate versioning for `Chart.yaml` (this generally should be complete between renovate + restoring the modifications). `appVersion` should equal the new image version, `version` should be the upstream version with `-bb.0` appended.
 1. Add a changelog entry for the new chart version. At minimum mention the new upstream chart version and new image version(s).

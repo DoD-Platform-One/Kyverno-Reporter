@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.1.1-bb.3] (2025-06-20)
+
+### Changed
+
+- Updated DEVELOPMENT_MAINTENANCE.md for pass-through pattern
+- Renabled cypress tests and ensured they are working
+
 ## [3.1.1-bb.2] (2025-06-13)
 
 ### Changed

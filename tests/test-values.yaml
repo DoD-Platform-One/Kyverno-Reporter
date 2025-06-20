@@ -31,6 +31,9 @@ grafana:
       enabled: false
 kyvernoReporter:
   enabled: true
+  values:
+    bbtests:
+      enabled: true
 kyverno:
   values:
     bbtests:
