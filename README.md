@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.1.1-bb.3](https://img.shields.io/badge/Version-3.1.1--bb.3-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.1.1-bb.4](https://img.shields.io/badge/Version-3.1.1--bb.4-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -47,15 +47,44 @@ helm install kyverno-reporter chart/
 | domain | string | `"dev.bigbang.mil"` | domain to use for virtual service |
 | global.fullnameOverride | string | `"kyverno-reporter"` |  |
 | global.labels | object | `{}` |  |
+| networkPolicies.enabled | bool | `false` |  |
+| networkPolicies.ingressLabels.app | string | `"public-ingressgateway"` |  |
+| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
+| networkPolicies.istioNamespaceSelector.ingress | string | `"istio-gateway"` |  |
+| networkPolicies.istioNamespaceSelector.egress | string | `"istio-gateway"` |  |
+| networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
+| networkPolicies.additionalPolicies | list | `[]` |  |
+| istio.enabled | bool | `true` |  |
+| istio.mtls.mode | string | `"STRICT"` |  |
+| istio.hardened.enabled | bool | `true` |  |
+| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
+| istio.hardened.customAuthorizationPolicies[0].name | string | `"allow-kyverno-reporter"` |  |
+| istio.hardened.customAuthorizationPolicies[0].enabled | bool | `true` |  |
+| istio.hardened.customAuthorizationPolicies[0].spec.selector.matchLabels."app.kubernetes.io/instance" | string | `"kyverno-reporter-kyverno-reporter"` |  |
+| istio.hardened.customAuthorizationPolicies[0].spec.action | string | `"ALLOW"` |  |
+| istio.hardened.customAuthorizationPolicies[0].spec.rules[0].from[0].source.namespaces[0] | string | `"kyverno-reporter"` |  |
+| istio.kyvernoReporter.enabled | bool | `true` | Enable Virtual Service for Kyverno Reporter |
+| istio.kyvernoReporter.labels | object | `{}` | Labels for VS |
+| istio.kyvernoReporter.gateways | list | `["istio-gateway/public-ingressgateway"]` | Gateways for VS |
+| istio.kyvernoReporter.hosts | list | `["policyreporter.{{ .Values.domain }}"]` | Hosts for VS |
+| bbtests.enabled | bool | `false` |  |
+| bbtests.cypress.artifacts | bool | `true` |  |
+| bbtests.cypress.envs.cypress_grafana_url | string | `"http://grafana.monitoring.svc.cluster.local"` |  |
+| bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"` |  |
+| bbtests.cypress.envs.cypress_grafana_user | string | `"admin"` |  |
+| bbtests.cypress.envs.cypress_grafana_pass | string | `"prom-operator"` |  |
+| bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5"` |  |
+| bbtests.scripts.envs.KYVERNO_REPORTER_URL | string | `"http://policy-reporter.kyverno-reporter.svc:8080"` |  |
+| bbtests.volumes | list | `[]` |  |
 | upstream.nameOverride | string | `"kyverno-reporter"` |  |
-| upstream.fullnameOverride | string | `"policy-reporter"` |  |
 | upstream.namespaceOverride | string | `"kyverno-reporter"` |  |
 | upstream.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | upstream.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
 | upstream.image.pullPolicy | string | `"IfNotPresent"` |  |
 | upstream.image.tag | string | `"3.1.1"` |  |
-| upstream.image.priorityClassName | string | `""` | Deployment priorityClassName |
+| upstream.image.priorityClassName | string | `""` |  |
 | upstream.ui.enabled | bool | `true` |  |
 | upstream.ui.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.ui.image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
@@ -73,46 +102,6 @@ helm install kyverno-reporter chart/
 | upstream.monitoring.enabled | bool | `true` | Enables the Prometheus Operator integration |
 | upstream.monitoring.grafana.dashboards.enabled | bool | `true` |  |
 | upstream.monitoring.grafana.dashboards.namespace | string | `"monitoring"` |  |
-| upstream.monitoring.serviceMonitor.scheme | string | `"https"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.caFile | string | `"/etc/prom-certs/root-cert.pem"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.certFile | string | `"/etc/prom-certs/cert-chain.pem"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.keyFile | string | `"/etc/prom-certs/key.pem"` |  |
-| upstream.monitoring.serviceMonitor.tlsConfig.insecureSkipVerify | bool | `true` |  |
-| networkPolicies.enabled | bool | `false` |  |
-| networkPolicies.ingressLabels.app | string | `"public-ingressgateway"` |  |
-| networkPolicies.ingressLabels.istio | string | `"ingressgateway"` |  |
-| networkPolicies.istioNamespaceSelector.ingress | string | `"istio-gateway"` |  |
-| networkPolicies.istioNamespaceSelector.egress | string | `"istio-gateway"` |  |
-| networkPolicies.controlPlaneCidr | string | `"0.0.0.0/0"` |  |
-| networkPolicies.additionalPolicies | list | `[]` |  |
-| extraVolumes.volumeMounts | list | `[]` |  |
-| openshift | bool | `false` |  |
-| istio.enabled | bool | `true` |  |
-| istio.mtls.mode | string | `"STRICT"` |  |
-| istio.hardened.enabled | bool | `true` |  |
-| istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
-| istio.hardened.customAuthorizationPolicies[0].name | string | `"allow-kyverno-reporter"` |  |
-| istio.hardened.customAuthorizationPolicies[0].enabled | bool | `true` |  |
-| istio.hardened.customAuthorizationPolicies[0].spec.selector.matchLabels."app.kubernetes.io/instance" | string | `"kyverno-reporter-kyverno-reporter"` |  |
-| istio.hardened.customAuthorizationPolicies[0].spec.action | string | `"ALLOW"` |  |
-| istio.hardened.customAuthorizationPolicies[0].spec.rules[0].from[0].source.namespaces[0] | string | `"kyverno-reporter"` |  |
-| istio.hardened.customServiceEntries | list | `[]` |  |
-| istio.hardened.annotations | object | `{}` |  |
-| istio.kyvernoReporter.enabled | bool | `true` |  |
-| istio.kyvernoReporter.virtualService.enabled | bool | `true` |  |
-| istio.kyvernoReporter.labels | object | `{}` | Labels for VS |
-| istio.kyvernoReporter.gateways | list | `["istio-gateway/public-ingressgateway"]` | Gateways for VS |
-| istio.kyvernoReporter.hosts | list | `["policyreporter.{{ .Values.domain }}"]` | Hosts for VS |
-| bbtests.enabled | bool | `false` |  |
-| bbtests.cypress.artifacts | bool | `true` |  |
-| bbtests.cypress.envs.cypress_grafana_url | string | `"http://grafana.monitoring.svc.cluster.local"` |  |
-| bbtests.cypress.envs.cypress_prometheus_url | string | `"http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090"` |  |
-| bbtests.cypress.envs.cypress_grafana_user | string | `"admin"` |  |
-| bbtests.cypress.envs.cypress_grafana_pass | string | `"prom-operator"` |  |
-| bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5"` |  |
-| bbtests.scripts.envs.KYVERNO_REPORTER_URL | string | `"http://policy-reporter.kyverno-reporter.svc:8080"` |  |
-| bbtests.volumes | list | `[]` |  |
 
 ## Contributing
 

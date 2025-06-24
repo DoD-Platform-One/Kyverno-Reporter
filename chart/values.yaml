@@ -5,10 +5,68 @@ global:
   fullnameOverride: kyverno-reporter
   labels: {}
 
-upstream:
+networkPolicies:
+  enabled: false
+  ingressLabels:
+    app: public-ingressgateway
+    istio: ingressgateway
+  istioNamespaceSelector:
+    ingress: istio-gateway
+    egress: istio-gateway
+  controlPlaneCidr: 0.0.0.0/0
+  additionalPolicies: []
 
+istio:
+  enabled: true
+  mtls:
+    mode: STRICT
+  hardened:
+    enabled: true
+    outboundTrafficPolicyMode: "REGISTRY_ONLY"
+    customAuthorizationPolicies:
+    - name: "allow-kyverno-reporter"
+      enabled: true
+      spec:
+        selector:
+          matchLabels:
+            app.kubernetes.io/instance: kyverno-reporter-kyverno-reporter
+        action: ALLOW
+        rules:
+        - from:
+          - source:
+              namespaces:
+              - "kyverno-reporter"
+  kyvernoReporter:
+    # -- Enable Virtual Service for Kyverno Reporter
+    enabled: true
+    # -- Labels for VS
+    labels: {}
+    # -- Gateways for VS
+    gateways:
+      - istio-gateway/public-ingressgateway
+    # -- Hosts for VS
+    hosts:
+      - policyreporter.{{ .Values.domain }}
+
+bbtests:
+  enabled: false
+  cypress:
+    artifacts: true
+    envs:
+      cypress_grafana_url: http://grafana.monitoring.svc.cluster.local
+      cypress_prometheus_url: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
+      cypress_grafana_user: "admin"
+      cypress_grafana_pass: "prom-operator"
+      cypress_reporter_ns: kyverno-reporter
+  scripts:
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5
+    envs:
+      KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
+  volumes: []
+
+# Upstream chart values
+upstream:
   nameOverride: "kyverno-reporter"
-  fullnameOverride: "policy-reporter"
   namespaceOverride: "kyverno-reporter"
 
   imagePullSecrets: 
@@ -19,7 +77,6 @@ upstream:
     repository: ironbank/opensource/kyverno/policy-reporter
     pullPolicy: IfNotPresent
     tag: 3.1.1
-    # -- Deployment priorityClassName
     priorityClassName: ""
 
   ui:
@@ -47,7 +104,6 @@ upstream:
       podLabels:
         app.kubernetes.io/part-of: policy-reporter
 
-  # monitoring contains configurations related to monitoring
   monitoring:
     # -- Enables the Prometheus Operator integration
     enabled: true
@@ -55,90 +111,3 @@ upstream:
       dashboards:
         enabled: true
         namespace: monitoring
-    serviceMonitor:
-      scheme: https
-      tlsConfig:
-        caFile: /etc/prom-certs/root-cert.pem
-        certFile: /etc/prom-certs/cert-chain.pem
-        keyFile: /etc/prom-certs/key.pem
-        insecureSkipVerify: true  # Prometheus does not support Istio security naming, thus skip verifying target pod certificate
-
-
-# Big Bang additions
-networkPolicies:
-  enabled: false
-  ingressLabels:
-    app: public-ingressgateway
-    istio: ingressgateway
-  istioNamespaceSelector:
-    ingress: istio-gateway
-    egress: istio-gateway
-  controlPlaneCidr: 0.0.0.0/0
-  additionalPolicies: []
-
-extraVolumes:
-  volumeMounts: []
-openshift: false
-
-istio:
-  enabled: true
-  mtls:
-    mode: STRICT
-  hardened:
-    enabled: true
-    outboundTrafficPolicyMode: "REGISTRY_ONLY"
-    customAuthorizationPolicies:
-    - name: "allow-kyverno-reporter"
-      enabled: true
-      spec:
-        selector:
-          matchLabels:
-            app.kubernetes.io/instance: kyverno-reporter-kyverno-reporter
-        action: ALLOW
-        rules:
-        - from:
-          - source:
-              namespaces:
-              - "kyverno-reporter"
-
-    customServiceEntries: []
-      # - name: "allow-google"
-      #   enabled: true
-      #   spec:
-      #     hosts:
-      #       - *.google.com
-      #     location: MESH_EXTERNAL
-      #     ports:
-      #       - number: 443
-      #         protocol: TLS
-      #         name: https
-      #     resolution: DNS
-    annotations: {}
-  kyvernoReporter:
-    enabled: true
-    virtualService:
-      enabled: true
-    # -- Labels for VS
-    labels: {}
-    # -- Gateways for VS
-    gateways:
-      - istio-gateway/public-ingressgateway
-    # -- Hosts for VS
-    hosts:
-      - policyreporter.{{ .Values.domain }}
-bbtests:
-  enabled: false
-  cypress:
-    artifacts: true
-    envs:
-      cypress_grafana_url: http://grafana.monitoring.svc.cluster.local
-      cypress_prometheus_url: http://monitoring-kube-prometheus-prometheus.monitoring.svc.cluster.local:9090
-      cypress_grafana_user: "admin"
-      cypress_grafana_pass: "prom-operator"
-      cypress_reporter_ns: kyverno-reporter
-  scripts:
-    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5
-    envs:
-      KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
-
-  volumes: []
