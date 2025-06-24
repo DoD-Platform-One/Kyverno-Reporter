@@ -1,4 +1,4 @@
-{{- if and .Values.istio.enabled .Values.istio.kyvernoReporter.virtualService.enabled -}}
+{{- if and .Values.istio.enabled .Values.istio.kyvernoReporter.enabled -}}
 apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:

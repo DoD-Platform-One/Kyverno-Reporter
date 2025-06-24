@@ -4,14 +4,12 @@ description: |
   Policy Reporter watches for PolicyReport Resources.
   It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
 type: application
-version: 3.1.1-bb.3
+version: 3.1.1-bb.4
 appVersion: 3.1.1
 icon: https://github.com/kyverno/kyverno/raw/main/img/logo.png
 home: https://kyverno.github.io/policy-reporter
 sources:
   - https://github.com/kyverno/policy-reporter
-maintainers:
-  - name: Frank Jogeleit
 dependencies:
   - name: policy-reporter
     version: 3.1.1

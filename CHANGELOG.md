@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.1.1-bb.4] (2025-06-23)
+
+### Changed
+
+- Removed bigbang folder and unused files
+- Reorganized values.yaml so bb values are on top according to updated ADR for pass-through
+- Removed unused value references
+- Removed upstream maintainer reference in chart.yaml
+
 ## [3.1.1-bb.3] (2025-06-20)
 
 ### Changed
