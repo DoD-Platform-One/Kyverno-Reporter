@@ -59,7 +59,7 @@ bbtests:
       cypress_grafana_pass: "prom-operator"
       cypress_reporter_ns: kyverno-reporter
   scripts:
-    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.5
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.6
     envs:
       KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
   volumes: []
