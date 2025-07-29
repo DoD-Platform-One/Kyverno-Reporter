@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.1.4-bb.0](https://img.shields.io/badge/Version-3.1.4--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.1.1](https://img.shields.io/badge/AppVersion-3.1.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.3.3-bb.0](https://img.shields.io/badge/Version-3.3.3--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.1](https://img.shields.io/badge/AppVersion-3.3.1-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -83,20 +83,20 @@ helm install kyverno-reporter chart/
 | upstream.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
 | upstream.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.image.tag | string | `"3.1.1"` |  |
+| upstream.image.tag | string | `"3.3.3"` |  |
 | upstream.image.priorityClassName | string | `""` |  |
 | upstream.ui.enabled | bool | `true` |  |
 | upstream.ui.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.ui.image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
 | upstream.ui.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.ui.image.tag | string | `"2.3.10"` |  |
+| upstream.ui.image.tag | string | `"2.4.1"` |  |
 | upstream.ui.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | upstream.ui.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
 | upstream.plugin.kyverno.enabled | bool | `true` |  |
 | upstream.plugin.kyverno.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.plugin.kyverno.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter/kyverno-plugin"` |  |
 | upstream.plugin.kyverno.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.plugin.kyverno.image.tag | string | `"0.4.4"` |  |
+| upstream.plugin.kyverno.image.tag | string | `"0.5.0"` |  |
 | upstream.plugin.kyverno.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | upstream.plugin.kyverno.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
 | upstream.monitoring.enabled | bool | `true` | Enables the Prometheus Operator integration |
