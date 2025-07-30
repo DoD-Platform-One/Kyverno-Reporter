@@ -19,4 +19,3 @@ spec:
         paths: ["/metrics"]
         ports: ["8080"]
 {{- end }}
-
