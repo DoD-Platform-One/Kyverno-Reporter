@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.3.2-bb.1] (2025-08-01)
+
+### Changed
+
+- Added listing of images to chart.yaml
+
 ## [3.3.2-bb.0] (2025-07-30)
 
 ### Changed
