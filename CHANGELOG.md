@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.3.2-bb.2] (2025-08-18)
+
+### Changed
+
+- Update allow-ui-to-policy-reporter-port authpolicy to include upstream.ui.enabled
+
 ## [3.3.2-bb.1] (2025-08-01)
 
 ### Changed
