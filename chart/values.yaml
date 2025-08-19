@@ -21,7 +21,7 @@ istio:
   mtls:
     mode: STRICT
   hardened:
-    enabled: true
+    enabled: false
     outboundTrafficPolicyMode: "REGISTRY_ONLY"
     customAuthorizationPolicies:
     - name: "allow-kyverno-reporter"
