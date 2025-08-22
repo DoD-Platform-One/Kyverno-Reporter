@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.3.2-bb.1](https://img.shields.io/badge/Version-3.3.2--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.3.3](https://img.shields.io/badge/AppVersion-3.3.3-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.4.0-bb.0](https://img.shields.io/badge/Version-3.4.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.4.0](https://img.shields.io/badge/AppVersion-3.4.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -56,7 +56,7 @@ helm install kyverno-reporter chart/
 | networkPolicies.additionalPolicies | list | `[]` |  |
 | istio.enabled | bool | `true` |  |
 | istio.mtls.mode | string | `"STRICT"` |  |
-| istio.hardened.enabled | bool | `true` |  |
+| istio.hardened.enabled | bool | `false` |  |
 | istio.hardened.outboundTrafficPolicyMode | string | `"REGISTRY_ONLY"` |  |
 | istio.hardened.customAuthorizationPolicies[0].name | string | `"allow-kyverno-reporter"` |  |
 | istio.hardened.customAuthorizationPolicies[0].enabled | bool | `true` |  |
@@ -74,7 +74,7 @@ helm install kyverno-reporter chart/
 | bbtests.cypress.envs.cypress_grafana_user | string | `"admin"` |  |
 | bbtests.cypress.envs.cypress_grafana_pass | string | `"prom-operator"` |  |
 | bbtests.cypress.envs.cypress_reporter_ns | string | `"kyverno-reporter"` |  |
-| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.6"` |  |
+| bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.32.8"` |  |
 | bbtests.scripts.envs.KYVERNO_REPORTER_URL | string | `"http://policy-reporter.kyverno-reporter.svc:8080"` |  |
 | bbtests.volumes | list | `[]` |  |
 | upstream.nameOverride | string | `"kyverno-reporter"` |  |
@@ -83,13 +83,13 @@ helm install kyverno-reporter chart/
 | upstream.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
 | upstream.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.image.tag | string | `"3.3.3"` |  |
+| upstream.image.tag | string | `"3.4.0"` |  |
 | upstream.image.priorityClassName | string | `""` |  |
 | upstream.ui.enabled | bool | `true` |  |
 | upstream.ui.image.registry | string | `"registry1.dso.mil"` |  |
 | upstream.ui.image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
 | upstream.ui.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.ui.image.tag | string | `"2.4.1"` |  |
+| upstream.ui.image.tag | string | `"2.4.2"` |  |
 | upstream.ui.imagePullSecrets[0].name | string | `"private-registry"` |  |
 | upstream.ui.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
 | upstream.plugin.kyverno.enabled | bool | `true` |  |
