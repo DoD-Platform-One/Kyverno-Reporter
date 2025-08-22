@@ -3,6 +3,16 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
+
+## [3.4.0-bb.0] (2025-08-20)
+
+### Changed
+
+- registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter v3.3.3 -> v3.4.0
+- registry1.dso.mil/ironbank/nirmata/policy-reporter/policy-reporter-ui v2.4.1 -> v2.4.2
+- Updated policy-reporter subchart 3.3.2 -> 3.4.0
+- Update gluon v0.6.2 -> v0.7.0
+
 ## [3.3.2-bb.3] (2025-08-18)
 
 ### Changed
@@ -15,6 +25,7 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 - Update allow-ui-to-policy-reporter-port authpolicy to include upstream.ui.enabled
 - Changed Istio hardened enabled from true to false
+
 ## [3.3.2-bb.1] (2025-08-01)
 
 ### Changed
