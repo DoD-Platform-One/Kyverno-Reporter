@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.4.2-bb.0] (2025-09-09)
+
+### Changed
+
+- registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter v3.4.0 -> v3.4.2
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.32.8 -> v1.33.4
+- Updated policy-reporter subchart  3.4.0 -> 3.4.2
+- Update gluon v0.7.0 -> v0.9.0
+
 ## [3.4.0-bb.0] (2025-08-20)
 
 ### Changed
