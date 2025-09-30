@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.5.0-bb.1] (2025-09-22)
+
+### Changed
+
+- Update gluon v0.9.0 -> v0.9.1
+- Added reference to upstream values in comment for values.yaml
+
 ## [3.5.0-bb.0] (2025-09-18)
 
 ### Changed

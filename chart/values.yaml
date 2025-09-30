@@ -64,7 +64,9 @@ bbtests:
       KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
   volumes: []
 
-# Upstream chart values
+# -- Values to pass to [the upstream kyverno chart](https://github.com/kyverno/policy-reporter/blob/main/charts/policy-reporter/values.yaml)
+# @default -- Upstream chart values
+
 upstream:
   nameOverride: "kyverno-reporter"
   namespaceOverride: "kyverno-reporter"
