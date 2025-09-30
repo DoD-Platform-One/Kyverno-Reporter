@@ -1,7 +1,7 @@
 <!-- Warning: Do not manually edit this file. See notes on gluon + helm-docs at the end of this file for more information. -->
 # kyverno-reporter
 
-![Version: 3.5.0-bb.0](https://img.shields.io/badge/Version-3.5.0--bb.0-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.0](https://img.shields.io/badge/AppVersion-3.5.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
+![Version: 3.5.0-bb.1](https://img.shields.io/badge/Version-3.5.0--bb.1-informational?style=flat-square) ![Type: application](https://img.shields.io/badge/Type-application-informational?style=flat-square) ![AppVersion: 3.5.0](https://img.shields.io/badge/AppVersion-3.5.0-informational?style=flat-square) ![Maintenance Track: bb_integrated](https://img.shields.io/badge/Maintenance_Track-bb_integrated-green?style=flat-square)
 
 Policy Reporter watches for PolicyReport Resources.
 It creates Prometheus Metrics and can send rule validation events to different targets like Loki, Elasticsearch, Slack or Discord
@@ -29,7 +29,7 @@ It creates Prometheus Metrics and can send rule validation events to different t
 
 Install Helm
 
-<https://helm.sh/docs/intro/install/>
+https://helm.sh/docs/intro/install/
 
 ## Deployment
 
@@ -77,31 +77,8 @@ helm install kyverno-reporter chart/
 | bbtests.scripts.image | string | `"registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.33.5"` |  |
 | bbtests.scripts.envs.KYVERNO_REPORTER_URL | string | `"http://policy-reporter.kyverno-reporter.svc:8080"` |  |
 | bbtests.volumes | list | `[]` |  |
-| upstream.nameOverride | string | `"kyverno-reporter"` |  |
-| upstream.namespaceOverride | string | `"kyverno-reporter"` |  |
-| upstream.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.image.registry | string | `"registry1.dso.mil"` |  |
-| upstream.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter"` |  |
-| upstream.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.image.tag | string | `"3.5.0"` |  |
-| upstream.image.priorityClassName | string | `""` |  |
-| upstream.ui.enabled | bool | `true` |  |
-| upstream.ui.image.registry | string | `"registry1.dso.mil"` |  |
-| upstream.ui.image.repository | string | `"ironbank/nirmata/policy-reporter/policy-reporter-ui"` |  |
-| upstream.ui.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.ui.image.tag | string | `"2.4.3"` |  |
-| upstream.ui.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.ui.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
-| upstream.plugin.kyverno.enabled | bool | `true` |  |
-| upstream.plugin.kyverno.image.registry | string | `"registry1.dso.mil"` |  |
-| upstream.plugin.kyverno.image.repository | string | `"ironbank/opensource/kyverno/policy-reporter/kyverno-plugin"` |  |
-| upstream.plugin.kyverno.image.pullPolicy | string | `"IfNotPresent"` |  |
-| upstream.plugin.kyverno.image.tag | string | `"0.5.1"` |  |
-| upstream.plugin.kyverno.imagePullSecrets[0].name | string | `"private-registry"` |  |
-| upstream.plugin.kyverno.podLabels."app.kubernetes.io/part-of" | string | `"policy-reporter"` |  |
+| upstream | object | Upstream chart values | Values to pass to [the upstream kyverno chart](https://github.com/kyverno/policy-reporter/blob/main/charts/policy-reporter/values.yaml) |
 | upstream.monitoring.enabled | bool | `true` | Enables the Prometheus Operator integration |
-| upstream.monitoring.grafana.dashboards.enabled | bool | `true` |  |
-| upstream.monitoring.grafana.dashboards.namespace | string | `"monitoring"` |  |
 
 ## Contributing
 
@@ -110,3 +87,4 @@ Please see the [contributing guide](./CONTRIBUTING.md) if you are interested in 
 ---
 
 _This file is programatically generated using `helm-docs` and some BigBang-specific templates. The `gluon` repository has [instructions for regenerating package READMEs](https://repo1.dso.mil/big-bang/product/packages/gluon/-/blob/master/docs/bb-package-readme.md)._
+
