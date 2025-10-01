@@ -87,7 +87,7 @@ upstream:
       registry: registry1.dso.mil
       repository: ironbank/nirmata/policy-reporter/policy-reporter-ui
       pullPolicy: IfNotPresent
-      tag: "2.4.3"
+      tag: "2.4.4"
     imagePullSecrets: 
       - name: private-registry
     podLabels:

@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.5.0-bb.2] (2025-10-01)
+
+### Changed
+
+- Update gluon v0.9.1 -> v0.9.2
+- Update registry1.dso.mil/ironbank/nirmata/policy-reporter/policy-reporter-ui v2.4.3 -> v2.4.4
+
 ## [3.5.0-bb.1] (2025-09-22)
 
 ### Changed
