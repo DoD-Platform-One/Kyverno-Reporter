@@ -60,7 +60,7 @@ bbtests:
       cypress_grafana_pass: "prom-operator"
       cypress_reporter_ns: kyverno-reporter
   scripts:
-    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.33.5
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.2
     envs:
       KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
   volumes: []
@@ -79,7 +79,7 @@ upstream:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kyverno/policy-reporter
     pullPolicy: IfNotPresent
-    tag: 3.5.0
+    tag: 3.6.0
     priorityClassName: ""
 
   ui:
@@ -88,7 +88,7 @@ upstream:
       registry: registry1.dso.mil
       repository: ironbank/nirmata/policy-reporter/policy-reporter-ui
       pullPolicy: IfNotPresent
-      tag: "2.4.4"
+      tag: "2.5.0"
     imagePullSecrets: 
       - name: private-registry
     podLabels:
@@ -101,7 +101,7 @@ upstream:
         registry: registry1.dso.mil
         repository: ironbank/opensource/kyverno/policy-reporter/kyverno-plugin
         pullPolicy: IfNotPresent
-        tag: "0.5.1"
+        tag: "0.5.2"
       imagePullSecrets:
         - name: private-registry
       podLabels:
