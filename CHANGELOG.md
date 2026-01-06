@@ -3,6 +3,13 @@
 Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
+### [3.7.0-bb.1] (2026-01-05)
+
+### Changed
+
+- Updated gluon v0.9.6 -> v0.9.7
+- registry1.dso.mil/ironbank/opensource/kubernetes/kubectl v1.34.2 -> v1.34.3
+
 
 ## [3.7.0-bb.0] (2025-12-03)
 
