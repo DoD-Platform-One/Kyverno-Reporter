@@ -1,9 +1,9 @@
 dependencies:
 - name: policy-reporter
   repository: https://kyverno.github.io/policy-reporter
-  version: 3.7.0
+  version: 3.7.1
 - name: gluon
   repository: oci://registry1.dso.mil/bigbang
   version: 0.9.7
-digest: sha256:4dfa8a6e813d6c56e07ef7cf4a0d3ddf6db750703315cdb8a5d8d8eb8fcead08
-generated: "2025-12-11T07:35:57.774822971Z"
+digest: sha256:31275bac140fa7f25be0f9f9e0740e9017bfcd8f4b6e54860e881172e153d608
+generated: "2026-01-07T07:33:13.69962889Z"
