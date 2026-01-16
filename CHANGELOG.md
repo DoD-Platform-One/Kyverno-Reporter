@@ -4,6 +4,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.7.1-bb.1] (2026-01-13)
+
+### Changed
+
+- Added bb-common 0.12.3 as a helm dependency
+- Replaced all static network policies and istio-related resources with bb-common generated resources
+
 ## [3.7.1-bb.0] (2026-01-07)
 
 ### Changed
