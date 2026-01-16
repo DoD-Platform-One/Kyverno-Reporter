@@ -5,49 +5,55 @@ global:
   fullnameOverride: kyverno-reporter
   labels: {}
 
-networkPolicies:
-  enabled: false
-  ingressLabels:
-    app: public-ingressgateway
-    istio: ingressgateway
-  istioNamespaceSelector:
-    ingress: istio-gateway
-    egress: istio-gateway
-  controlPlaneCidr: 0.0.0.0/0
-  vpcCidr: 0.0.0.0/0
-  additionalPolicies: []
-
 istio:
-  enabled: true
-  mtls:
-    mode: STRICT
-  hardened:
+  enabled: false
+
+  sidecar:
     enabled: false
     outboundTrafficPolicyMode: "REGISTRY_ONLY"
-    customAuthorizationPolicies:
-    - name: "allow-kyverno-reporter"
+
+  serviceEntries:
+    custom: []
+
+  authorizationPolicies:
+    enabled: false
+    custom: []
+
+  # Default kyverno-reporter peer authentication
+  mtls:
+    # STRICT = Allow only mutual TLS traffic
+    # PERMISSIVE = Allow both plain text and mutual TLS traffic
+    mode: STRICT
+
+routes:
+  inbound:
+    policy-reporter-ui:
       enabled: true
-      spec:
-        selector:
+      gateways:
+        - istio-gateway/public-ingressgateway
+      hosts:
+        - policyreporter.dev.bigbang.mil
+      service: policy-reporter-ui.kyverno-reporter.svc.cluster.local
+      port: 8080
+
+networkPolicies:
+  enabled: false
+  egress:
+    from:
+      kyverno-reporter:
+        podSelector:
           matchLabels:
             app.kubernetes.io/instance: kyverno-reporter-kyverno-reporter
-        action: ALLOW
-        rules:
-        - from:
-          - source:
-              namespaces:
-              - "kyverno-reporter"
-  kyvernoReporter:
-    # -- Enable Virtual Service for Kyverno Reporter
-    enabled: true
-    # -- Labels for VS
-    labels: {}
-    # -- Gateways for VS
-    gateways:
-      - istio-gateway/public-ingressgateway
-    # -- Hosts for VS
-    hosts:
-      - policyreporter.{{ .Values.domain }}
+        to:
+          definition:
+            kubeAPI: true
+  ingress:
+    to:
+      policy-reporter:8080:
+        from:
+          k8s:
+            monitoring-monitoring-kube-prometheus@monitoring/prometheus: false
+  additionalPolicies: []
 
 bbtests:
   enabled: false
