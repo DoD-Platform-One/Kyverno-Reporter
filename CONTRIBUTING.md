@@ -22,7 +22,8 @@ To contribute a change:
 
 1. Open an issue in GitLab describing the scope of your work
 1. Assign yourself to the issue
-1. Label the issue with `status::doing`
+1. Label the issue with proper  `status` `kind` `priority` and `team`
+1. Ensure the issue has proper `Milestone` and `Iteration`
 1. Create a branch in the repository using your issue number as a prefix
 1. Make changes in code and push to your branch
 1. Write test cases by following the [testing documentation](docs/testing.md).
@@ -30,6 +31,8 @@ To contribute a change:
 1. Update `CHANGELOG.md` using the [Keep a Changelog](https://keepachangelog.com) format
 1. Open a merge request into the `main` branch
 1. Add a reference to the issue in the merge request description
+1. Label the merge request with `status` `kind` `priority` and `team`
+1. Ensure the merge request  has proper `Milestone`
 1. Resolve any failures from the pipeline
 1. Resolve any merge conflicts
 1. Label the Merge Request with `status::review`
