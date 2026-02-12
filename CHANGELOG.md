@@ -4,6 +4,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.7.1-bb.3] (2026-02-12)
+
+### Changed
+
+- Updated bb-common 0.12.3 -> 0.14.0
+- Updated gluon 0.9.7 -> 0.9.8
+- Updated cypress 14.0.0 -> 15.10.0
+- Migrated deprecated Cypress.env() to cy.env()
+
 ## [3.7.1-bb.2] (2026-01-21)
 
 ### Changed

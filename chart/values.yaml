@@ -67,7 +67,7 @@ bbtests:
       cypress_reporter_ns: kyverno-reporter
       cypress_policyreporter_ui: http://policy-reporter-ui.kyverno-reporter.svc.cluster.local:8080
   scripts:
-    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.3
+    image: registry1.dso.mil/ironbank/opensource/kubernetes/kubectl:v1.34.4
     envs:
       KYVERNO_REPORTER_URL: 'http://policy-reporter.kyverno-reporter.svc:8080'
   volumes: []

@@ -5,7 +5,9 @@ describe('Validate Policy Reporter UI Dashboards', {
 }, () => {
 
   before(function () {
-    cy.visit(Cypress.env('policyreporter_ui'))
+    cy.env(['policyreporter_ui']).then(({ policyreporter_ui }) => {
+      cy.visit(policyreporter_ui)
+    })
   })
 
   it('Validate main dashboard widgets exist', () => {
