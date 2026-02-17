@@ -86,7 +86,7 @@ upstream:
     registry: registry1.dso.mil
     repository: ironbank/opensource/kyverno/policy-reporter
     pullPolicy: IfNotPresent
-    tag: 3.7.0
+    tag: 3.7.2
     priorityClassName: ""
 
   ui:
