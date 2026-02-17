@@ -4,6 +4,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ---
 
+## [3.7.2-bb.0] (2026-02-17)
+
+### Changed
+- Updated policy-reporter subchart  v3.7.1 -> v3.7.2
+- registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter 3.7.0 -> 3.7.2
+
 ## [3.7.1-bb.3] (2026-02-12)
 
 ### Changed
