@@ -1,71 +1,105 @@
 {
-    "baseBranches": [
-        "main"
-    ],
-    "configWarningReuseIssue": false,
-    "dependencyDashboard": true,
-    "dependencyDashboardTitle": "Renovate: Upgrade Kyverno Reporter Images",
-    "draftPR": true,
-    "enabledManagers": [
-        "helmv3",
-        "helm-values",
-        "custom.regex"
-    ],
-    "ignorePaths": [
-        "chart/charts/**"
-    ],
-    "labels": [
-        "kyverno",
-        "renovate"
-    ],
-    "commitMessagePrefix": "SKIP UPDATE CHECK",
-    "packageRules": [
-        {
-            "matchDatasources": [
-                "docker"
-            ],
-            "groupName": "Ironbank"
-        }
-    ],
-    "customManagers": [
-        {
-            "customType": "regex",
-            "description": "Update kyvernoReporter helm chart version",
-            "managerFilePatterns": [
-                "/^chart/Chart\\.yaml$/"
-            ],
-            "matchStrings": [
-                "version:\\s+(?<currentValue>.+)-bb\\.\\d+"
-            ],
-            "depNameTemplate": "policy-reporter",
-            "datasourceTemplate": "helm",
-            "registryUrlTemplate": "https://kyverno.github.io/policy-reporter"
-        },
-        {
-            "customType": "regex",
-            "managerFilePatterns": [
-                "/^chart/Chart\\.yaml$/"
-            ],
-            "matchStrings": [
-                "appVersion:[^\\S\\r\\n]+(?<currentValue>.+)",
-                "- Kyverno Reporter:\\s+(?<currentValue>.+)"
-            ],
-            "depNameTemplate": "registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter",
-            "datasourceTemplate": "docker"
-        },
-        {
-            "customType": "regex",
-            "managerFilePatterns": [
-                "/^chart/Chart\\.yaml$/"
-            ],
-            "matchStrings": [
-                "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>.+)"
-            ],
-            "datasourceTemplate": "docker"
-        }
-    ],
-    "separateMajorMinor": false,
-    "postUpdateOptions": [
-        "helmUpdateSubChartArchives"
-    ]
+  "baseBranches": [
+    "main"
+  ],
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "Renovate: Update Kyverno Reporter Dependencies",
+  "draftPR": true,
+  "labels": [
+    "kyverno",
+    "renovate",
+    "kind::maintenance"
+  ],
+  "enabledManagers": [
+    "helmv3",
+    "custom.regex"
+  ],
+  "packageRules": [
+    {
+      "matchDatasources": [
+        "docker",
+        "helm"
+      ],
+      "groupName": "Kyverno Reporter",
+      "postUpgradeTasks": {
+        "commands": [
+          "match-chart-yaml-appversion",
+          "bump-changelog '{{#each upgrades}}- {{depName}} {{currentVersion}} -> {{newVersion}}\\n{{/each}}'",
+          "regenerate-helm-docs"
+        ],
+        "fileFilters": [
+          "chart/Chart.yaml",
+          "README.md",
+          "CHANGELOG.md"
+        ],
+        "executionMode": "branch"
+      }
+    }
+  ],
+  "separateMajorMinor": false,
+  "postUpdateOptions": [
+    "helmUpdateSubChartArchives"
+  ],
+  "customManagers": [
+    {
+      "customType": "regex",
+      "description": "Update helm chart version in Chart.yaml",
+      "managerFilePatterns": [
+        "/^chart/Chart\\.yaml$/"
+      ],
+      "matchStrings": [
+        "version:[^\\S\\r\\n]+(?<currentValue>[\\d.]+)-bb\\.\\d+"
+      ],
+      "depNameTemplate": "policy-reporter",
+      "datasourceTemplate": "helm",
+      "registryUrlTemplate": "https://kyverno.github.io/policy-reporter"
+    },
+    {
+      "customType": "regex",
+      "description": "Update app version in Chart.yaml",
+      "managerFilePatterns": [
+        "/^chart/Chart\\.yaml$/"
+      ],
+      "matchStrings": [
+        "appVersion:[^\\S\\r\\n]+(?<currentValue>\\S+)",
+        "- Kyverno Reporter:[^\\S\\r\\n]+(?<currentValue>\\S+)"
+      ],
+      "depNameTemplate": "registry1.dso.mil/ironbank/opensource/kyverno/policy-reporter",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Update images in Chart.yaml",
+      "managerFilePatterns": [
+        "/^chart/Chart\\.yaml$/"
+      ],
+      "matchStrings": [
+        "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Update image references in values.yaml",
+      "managerFilePatterns": [
+        "/^chart/values\\.yaml$/"
+      ],
+      "matchStrings": [
+        "registry:[^\\S\\r\\n]+(?<registry>\\S+)\\s+repository:[^\\S\\r\\n]+(?<depName>\\S+)[\\s\\S]*?tag:[^\\S\\r\\n]+\"?(?<currentValue>[^\"\\s]+)\"?"
+      ],
+      "depNameTemplate": "{{registry}}/{{depName}}",
+      "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "description": "Update inline image references in values.yaml",
+      "managerFilePatterns": [
+        "/^chart/values\\.yaml$/"
+      ],
+      "matchStrings": [
+        "image:[^\\S\\r\\n]+(?<depName>.+):(?<currentValue>\\S+)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ]
 }
