@@ -6,7 +6,7 @@
   "dependencyDashboardTitle": "Renovate: Update Kyverno Reporter Dependencies",
   "draftPR": true,
   "labels": [
-    "kyverno",
+    "kyvernoReporter",
     "renovate",
     "kind::maintenance"
   ],
